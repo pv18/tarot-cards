@@ -1,3 +1,3 @@
 export interface ICards {
-    id: number
+  id: number;
 }
