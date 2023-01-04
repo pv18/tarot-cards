@@ -4,7 +4,9 @@ import App from './components/App/App';
 import 'antd/dist/reset.css';
 import { BrowserRouter } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <BrowserRouter>
     <App />
