@@ -1,61 +1,30 @@
-import React, {useState} from 'react';
-import {HomeOutlined} from '@ant-design/icons';
-import type {MenuProps} from 'antd';
-import {Layout, Card, Menu, theme, Image} from 'antd';
-import {GiDiceSixFacesThree} from 'react-icons/gi';
-import {AllCards} from '../AllCards/AllCards';
-import {BsBorderAll} from 'react-icons/bs';
+import React from 'react';
+import { Card, Layout, Menu } from 'antd';
+import { AllCards } from '../../pages/AllCards/AllCards';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import { ROUTES } from '../../routes';
+import { FiveCards } from '../../pages/FiveCards/FiveCards';
+import {MenuPanel} from '../MenuPanel/MenuPanel';
 
-
-const {Header, Content, Footer, Sider} = Layout;
-const {Meta} = Card;
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    children?: MenuItem[]
-): MenuItem {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    } as MenuItem;
-}
-
-const items: MenuItem[] = [
-    getItem('Все Карты', '1', <BsBorderAll/>),
-    getItem('3 Карты', '2', <GiDiceSixFacesThree/>),
-];
+const { Header, Content, Footer, Sider } = Layout;
+const { Meta } = Card;
 
 const App: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
-
-    return (
-        <Layout style={{minHeight: '100vh'}}>
-            <Sider
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)}
-            >
-                <Menu
-                    style={{margin: '15px 0 0 0'}}
-                    theme="dark"
-                    defaultSelectedKeys={['1']}
-                    mode="inline"
-                    items={items}
-                />
-            </Sider>
-            <Layout className="site-layout">
-                <Content style={{margin: '0 16px'}}>
-                    <AllCards/>
-                </Content>
-            </Layout>
-        </Layout>
-    );
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider>
+        <MenuPanel/>
+      </Sider>
+      <Layout>
+        <Content style={{ margin: '0 16px' }}>
+          <Routes>
+            <Route path={ROUTES.HOME} element={<AllCards />} />
+            <Route path={ROUTES.FIVE} element={<FiveCards />} />
+          </Routes>
+        </Content>
+      </Layout>
+    </Layout>
+  );
 };
 
 export default App;

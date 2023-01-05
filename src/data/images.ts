@@ -157,4 +157,3 @@ export const images = [
   Staffs13,
   Staffs14,
 ];
-
