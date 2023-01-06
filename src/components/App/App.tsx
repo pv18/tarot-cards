@@ -4,7 +4,7 @@ import { AllCards } from '../../pages/AllCards/AllCards';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { FiveCards } from '../../pages/FiveCards/FiveCards';
-import {MenuPanel} from '../MenuPanel/MenuPanel';
+import { MenuPanel } from '../MenuPanel/MenuPanel';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
@@ -13,7 +13,7 @@ const App: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider>
-        <MenuPanel/>
+        <MenuPanel />
       </Sider>
       <Layout>
         <Content style={{ margin: '0 16px' }}>

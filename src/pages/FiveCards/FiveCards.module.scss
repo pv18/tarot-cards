@@ -1,39 +1,12 @@
 .container {
   height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 10px 0px;
-  grid-auto-flow: row;
-  //justify-content: center;
-  //align-content: center;
-  //justify-items: center;
-  //align-items: center;
-  grid-template-areas:
-    "first second third"
-    "fourth . fifth";
-}
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 
-.first {
-  grid-area: first;
-}
-
-.second {
-  grid-area: second;
-}
-
-.third {
-  grid-area: third;
-}
-
-.fourth{
-  grid-area: fourth;
-}
-
-.fifth {
-  grid-area: fifth;
-}
-
-.third-lookup {
-  grid-area: third-lookup;
+  .cards {
+    display: flex;
+    justify-content: space-around;
+  }
 }
