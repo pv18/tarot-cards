@@ -37,8 +37,8 @@ const App: React.FC = () => (
   >
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
+        breakpoint='lg'
+        collapsedWidth='0'
         width={200}
         style={{ borderRight: '1px solid rgba(212, 175, 55, 0.15)' }}
       >

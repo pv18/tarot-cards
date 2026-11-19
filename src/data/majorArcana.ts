@@ -1,4 +1,4 @@
-import { ICard } from '../types/types';
+import { type ICard } from '../types/types';
 
 export const majorArcana: ICard[] = [
   {

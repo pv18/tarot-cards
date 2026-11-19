@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Modal, Segmented, Tag } from 'antd';
 import { cardImage, cards } from '../../data/cards';
-import { ICard, SUIT_TITLES, Suit } from '../../types/types';
+import { type ICard, SUIT_TITLES, type Suit } from '../../types/types';
 import s from './AllCards.module.scss';
 
 type Filter = 'all' | Suit;
@@ -37,11 +37,11 @@ export const AllCards: React.FC = () => {
         {visible.map((card) => (
           <button
             key={card.id}
-            type="button"
+            type='button'
             className={s.item}
             onClick={() => setSelected(card)}
           >
-            <img src={cardImage(card.id)} alt={card.name} loading="lazy" />
+            <img src={cardImage(card.id)} alt={card.name} loading='lazy' />
             <span className={s.name}>{card.name}</span>
           </button>
         ))}

@@ -55,22 +55,18 @@ export const FiveCards = () => {
 
       <div className={s.controls}>
         <Button
-          type="primary"
-          size="large"
+          type='primary'
+          size='large'
           disabled={drawn.length >= SPREAD_SIZE}
           onClick={addCard}
         >
           Взять карту
         </Button>
-        <Button
-          size="large"
-          disabled={drawn.length > 0}
-          onClick={shuffleDeck}
-        >
+        <Button size='large' disabled={drawn.length > 0} onClick={shuffleDeck}>
           Тасовать карты
         </Button>
         <Button
-          size="large"
+          size='large'
           disabled={drawn.length < SPREAD_SIZE}
           onClick={restart}
         >

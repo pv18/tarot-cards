@@ -1,4 +1,4 @@
-import { ICard } from '../types/types';
+import { type ICard } from '../types/types';
 
 const CUPS_START = 23;
 const SWORDS_START = 37;
@@ -529,8 +529,11 @@ const wands: MinorDef[] = [
   },
 ];
 
-const buildSuit = (start: number, suit: ICard['suit'], defs: MinorDef[]): ICard[] =>
-  defs.map((def, index) => ({ id: start + index, suit, ...def }));
+const buildSuit = (
+  start: number,
+  suit: ICard['suit'],
+  defs: MinorDef[]
+): ICard[] => defs.map((def, index) => ({ id: start + index, suit, ...def }));
 
 export const minorArcana: ICard[] = [
   ...buildSuit(CUPS_START, 'cups', cups),

@@ -18,8 +18,8 @@ export const MenuPanel: React.FC = () => {
     <div className={s.MenuPanel}>
       <div className={s.brand}>Таро</div>
       <Menu
-        theme="dark"
-        mode="inline"
+        theme='dark'
+        mode='inline'
         selectedKeys={[location.pathname]}
         items={items.map((item) => ({
           key: item.key,

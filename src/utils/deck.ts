@@ -1,4 +1,4 @@
-import { ICard, ICardDrawn } from '../types/types';
+import { type ICard, type ICardDrawn } from '../types/types';
 import { cards } from '../data/cards';
 
 /** Тасовка Фишера–Йетса, исходный массив не изменяется */

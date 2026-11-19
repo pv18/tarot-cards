@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Popconfirm, Tag, Typography } from 'antd';
 import { drawRandomCard } from '../../utils/deck';
 import { cardImage, getCardById } from '../../data/cards';
-import { ICardDrawn } from '../../types/types';
+import { type ICardDrawn } from '../../types/types';
 import s from './CardOfDay.module.scss';
 
 const STORAGE_KEY = 'tarot-card-of-day';
@@ -53,9 +53,7 @@ export const CardOfDay: React.FC = () => {
     setDraw(next);
     setRevealed(false);
     // даём браузеру отрисовать рубашку, затем запускаем переворот
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => setRevealed(true))
-    );
+    requestAnimationFrame(() => requestAnimationFrame(() => setRevealed(true)));
   };
 
   const handleReset = () => {
@@ -77,7 +75,10 @@ export const CardOfDay: React.FC = () => {
         <div className={s.cardArea}>
           <div className={`${s.flip} ${revealed ? s.flipped : ''}`}>
             <div className={s.flipInner}>
-              <div className={s.faceBack} onClick={draw ? undefined : handleDraw}>
+              <div
+                className={s.faceBack}
+                onClick={draw ? undefined : handleDraw}
+              >
                 <span className={s.backSymbol}>☾</span>
               </div>
               <div className={s.faceFront}>
@@ -94,16 +95,16 @@ export const CardOfDay: React.FC = () => {
 
           <div className={s.actions}>
             {!draw && (
-              <Button type="primary" size="large" onClick={handleDraw}>
+              <Button type='primary' size='large' onClick={handleDraw}>
                 Тянуть карту
               </Button>
             )}
             {draw && revealed && (
               <Popconfirm
-                title="Тянуть другую карту?"
-                description="Карта дня обычно остаётся на весь день."
-                okText="Тянуть"
-                cancelText="Оставить"
+                title='Тянуть другую карту?'
+                description='Карта дня обычно остаётся на весь день.'
+                okText='Тянуть'
+                cancelText='Оставить'
                 onConfirm={handleReset}
               >
                 <Button>Тянуть заново</Button>
@@ -126,7 +127,7 @@ export const CardOfDay: React.FC = () => {
                   </Tag>
                 ))}
               </div>
-              <hr className="tarot-divider" />
+              <hr className='tarot-divider' />
               <Typography.Paragraph className={s.text}>
                 {draw.reversed ? draw.card.reversed : draw.card.upright}
               </Typography.Paragraph>
@@ -134,8 +135,8 @@ export const CardOfDay: React.FC = () => {
             </>
           ) : (
             <p className={s.text}>
-              Задайте себе вопрос дня и переверните карту: она подскажет,
-              на что обратить внимание сегодня.
+              Задайте себе вопрос дня и переверните карту: она подскажет, на что
+              обратить внимание сегодня.
             </p>
           )}
         </section>
