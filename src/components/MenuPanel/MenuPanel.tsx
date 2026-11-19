@@ -2,9 +2,10 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 import {
+  GiCardExchange,
   GiCardPick,
-  GiCardRandom,
   GiCardPlay,
+  GiCardRandom,
   GiOpenBook,
 } from 'react-icons/gi';
 import { ROUTES } from '../../routes';
@@ -14,6 +15,7 @@ const items = [
   { key: ROUTES.HOME, label: 'Карта дня', icon: <GiCardRandom /> },
   { key: ROUTES.THREE, label: 'Три карты', icon: <GiCardPlay /> },
   { key: ROUTES.FIVE, label: 'Пять карт', icon: <GiCardPick /> },
+  { key: ROUTES.CELTIC, label: 'Кельтский крест', icon: <GiCardExchange /> },
   { key: ROUTES.CARDS, label: 'Все карты', icon: <GiCardPick /> },
   { key: ROUTES.HISTORY, label: 'История', icon: <GiOpenBook /> },
 ];

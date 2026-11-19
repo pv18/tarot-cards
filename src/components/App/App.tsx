@@ -27,6 +27,11 @@ const ThreeCards = lazy(() =>
 const History = lazy(() =>
   import('../../pages/History/History').then((m) => ({ default: m.History }))
 );
+const CelticCross = lazy(() =>
+  import('../../pages/CelticCross/CelticCross').then((m) => ({
+    default: m.CelticCross,
+  }))
+);
 
 const { Sider, Content } = Layout;
 
@@ -85,6 +90,7 @@ const App: React.FC = () => (
               <Route path={ROUTES.CARDS} element={<AllCards />} />
               <Route path={ROUTES.FIVE} element={<FiveCards />} />
               <Route path={ROUTES.THREE} element={<ThreeCards />} />
+              <Route path={ROUTES.CELTIC} element={<CelticCross />} />
               <Route path={ROUTES.HISTORY} element={<History />} />
             </Routes>
           </Suspense>

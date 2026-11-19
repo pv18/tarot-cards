@@ -3,5 +3,6 @@ export const ROUTES = {
   CARDS: '/cards',
   FIVE: '/five',
   THREE: '/three',
+  CELTIC: '/celtic',
   HISTORY: '/history',
 };
