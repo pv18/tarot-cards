@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Popconfirm, Tag, Typography } from 'antd';
 import { drawRandomCard } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { playFlip } from '../../utils/sound';
 import { useSharedReading } from '../../hooks/useSharedReading';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
@@ -48,6 +49,7 @@ export const CardOfDay: React.FC = () => {
   });
 
   const handleDraw = () => {
+    playFlip();
     const next = drawRandomCard();
     const stored: IStoredDraw = {
       date: todayKey(),

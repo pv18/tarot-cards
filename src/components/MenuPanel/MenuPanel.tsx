@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Menu, Switch } from 'antd';
+import { SoundOutlined } from '@ant-design/icons';
 import {
   GiCardExchange,
   GiCardPick,
@@ -9,6 +10,7 @@ import {
   GiOpenBook,
 } from 'react-icons/gi';
 import { ROUTES } from '../../routes';
+import { isSoundEnabled, toggleSound } from '../../utils/sound';
 import s from './MenuPanel.module.scss';
 
 const items = [
@@ -22,6 +24,7 @@ const items = [
 
 export const MenuPanel: React.FC = () => {
   const location = useLocation();
+  const [soundOn, setSoundOn] = useState(isSoundEnabled);
 
   return (
     <div className={s.MenuPanel}>
@@ -36,6 +39,15 @@ export const MenuPanel: React.FC = () => {
           label: <NavLink to={item.key}>{item.label}</NavLink>,
         }))}
       />
+      <div className={s.soundToggle}>
+        <SoundOutlined />
+        <span>Звуки колоды</span>
+        <Switch
+          size='small'
+          checked={soundOn}
+          onChange={() => setSoundOn(toggleSound())}
+        />
+      </div>
     </div>
   );
 };

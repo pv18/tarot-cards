@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Input, Tag, Typography } from 'antd';
 import { drawCard, shuffle } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { playFlip, playShuffle } from '../../utils/sound';
 import { useSharedReading } from '../../hooks/useSharedReading';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
@@ -34,6 +35,7 @@ export const CelticCross = () => {
 
   const addCard = () => {
     if (deck.length === 0) return;
+    playFlip();
     const draw = drawCard(deck);
     const nextDeck = deck.filter((c) => c.id !== draw.card.id);
     const nextDrawn = [...drawn, draw];
@@ -56,6 +58,7 @@ export const CelticCross = () => {
   };
 
   const shuffleDeck = () => {
+    playShuffle();
     setDeck(shuffle(cards));
     setDrawn([]);
   };

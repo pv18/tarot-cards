@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Button, Input, Typography } from 'antd';
 import { shuffle } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { playFlip, playShuffle } from '../../utils/sound';
 import { useSharedReading } from '../../hooks/useSharedReading';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
@@ -19,6 +20,7 @@ export const FiveCards = () => {
 
   const addCard = () => {
     if (deck.length === 0) return;
+    playFlip();
     const id = deck[Math.floor(Math.random() * deck.length)];
     const nextDeck = deck.filter((n) => n !== id);
     const nextDrawn = [...drawn, id];
@@ -36,7 +38,10 @@ export const FiveCards = () => {
     }
   };
 
-  const shuffleDeck = () => setDeck(shuffle(DECK_IDS));
+  const shuffleDeck = () => {
+    playShuffle();
+    setDeck(shuffle(DECK_IDS));
+  };
 
   const restart = () => {
     setDeck(DECK_IDS);

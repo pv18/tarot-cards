@@ -14,14 +14,9 @@ body,
   min-height: 100vh;
 }
 
-body {
-  margin: 0;
-  color: #e8e2f0;
-  font-family:
-    'Segoe UI',
-    system-ui,
-    -apple-system,
-    sans-serif;
+// фон живёт на html, чтобы декоративные слои body::before/::after (z-index: -1)
+// были видны сквозь прозрачный body и не перекрывали контент
+html {
   background-color: $bg-mid;
   background-image:
     radial-gradient(rgba(255, 255, 255, 0.4) 0.5px, transparent 1px),
@@ -38,6 +33,56 @@ body {
     100% 100%,
     100% 100%;
   background-attachment: fixed;
+}
+
+body {
+  margin: 0;
+  color: #e8e2f0;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: transparent;
+}
+
+// два мерцающих звёздных слоя поверх базового неба
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.5) 0.6px, transparent 1.2px),
+    radial-gradient(rgba(212, 175, 55, 0.45) 0.7px, transparent 1.3px);
+  background-size:
+    230px 210px,
+    400px 360px;
+  animation: twinkle 7s ease-in-out infinite;
+}
+
+body::after {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.35) 0.5px,
+    transparent 1px
+  );
+  background-size: 170px 150px;
+  animation: twinkle 9s ease-in-out 2s infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 h1,
