@@ -1,14 +1,21 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
-import { GiCardPick, GiCardRandom, GiCardPlay } from 'react-icons/gi';
+import {
+  GiCardPick,
+  GiCardRandom,
+  GiCardPlay,
+  GiOpenBook,
+} from 'react-icons/gi';
 import { ROUTES } from '../../routes';
 import s from './MenuPanel.module.scss';
 
 const items = [
   { key: ROUTES.HOME, label: 'Карта дня', icon: <GiCardRandom /> },
+  { key: ROUTES.THREE, label: 'Три карты', icon: <GiCardPlay /> },
+  { key: ROUTES.FIVE, label: 'Пять карт', icon: <GiCardPick /> },
   { key: ROUTES.CARDS, label: 'Все карты', icon: <GiCardPick /> },
-  { key: ROUTES.FIVE, label: 'Пять карт', icon: <GiCardPlay /> },
+  { key: ROUTES.HISTORY, label: 'История', icon: <GiOpenBook /> },
 ];
 
 export const MenuPanel: React.FC = () => {

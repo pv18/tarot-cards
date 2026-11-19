@@ -19,6 +19,14 @@ const FiveCards = lazy(() =>
     default: m.FiveCards,
   }))
 );
+const ThreeCards = lazy(() =>
+  import('../../pages/ThreeCards/ThreeCards').then((m) => ({
+    default: m.ThreeCards,
+  }))
+);
+const History = lazy(() =>
+  import('../../pages/History/History').then((m) => ({ default: m.History }))
+);
 
 const { Sider, Content } = Layout;
 
@@ -76,6 +84,8 @@ const App: React.FC = () => (
               <Route path={ROUTES.HOME} element={<CardOfDay />} />
               <Route path={ROUTES.CARDS} element={<AllCards />} />
               <Route path={ROUTES.FIVE} element={<FiveCards />} />
+              <Route path={ROUTES.THREE} element={<ThreeCards />} />
+              <Route path={ROUTES.HISTORY} element={<History />} />
             </Routes>
           </Suspense>
         </Content>

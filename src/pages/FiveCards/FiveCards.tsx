@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Typography } from 'antd';
+import { Button, Input, Typography } from 'antd';
 import { shuffle } from '../../utils/deck';
+import { saveReading } from '../../utils/history';
 import { cardImage, cards, getCardById } from '../../data/cards';
 import s from './FiveCards.module.scss';
 
@@ -10,12 +11,25 @@ const SPREAD_SIZE = 5;
 export const FiveCards = () => {
   const [deck, setDeck] = useState<number[]>(DECK_IDS);
   const [drawn, setDrawn] = useState<number[]>([]);
+  const [question, setQuestion] = useState('');
 
   const addCard = () => {
     if (deck.length === 0) return;
     const id = deck[Math.floor(Math.random() * deck.length)];
-    setDeck(deck.filter((n) => n !== id));
-    setDrawn([...drawn, id]);
+    const nextDeck = deck.filter((n) => n !== id);
+    const nextDrawn = [...drawn, id];
+    setDeck(nextDeck);
+    setDrawn(nextDrawn);
+
+    if (nextDrawn.length === SPREAD_SIZE) {
+      saveReading({
+        id: crypto.randomUUID(),
+        type: 'five',
+        date: new Date().toISOString(),
+        question: question.trim() || undefined,
+        cards: nextDrawn.map((cardId) => ({ cardId, reversed: false })),
+      });
+    }
   };
 
   const shuffleDeck = () => setDeck(shuffle(DECK_IDS));
@@ -31,6 +45,16 @@ export const FiveCards = () => {
       <p className={s.subtitle}>
         Тасуйте колоду, думая о своём вопросе, и вытяните пять карт
       </p>
+
+      <Input
+        className={s.questionInput}
+        placeholder='Сформулируйте вопрос (необязательно)'
+        maxLength={200}
+        allowClear
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+        disabled={drawn.length > 0}
+      />
 
       <div className={s.spread}>
         {Array.from({ length: SPREAD_SIZE }, (_, i) => {

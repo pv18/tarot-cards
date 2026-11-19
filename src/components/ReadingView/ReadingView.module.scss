@@ -1,0 +1,60 @@
+$gold: #d4af37;
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.img,
+.imgReversed {
+  flex: 0 0 110px;
+  width: 110px;
+  aspect-ratio: 170 / 310;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.imgReversed {
+  transform: rotate(180deg);
+}
+
+.info {
+  flex: 1;
+}
+
+.position {
+  color: rgba(232, 226, 240, 0.55);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 4px;
+}
+
+.name {
+  font-family: 'Prata', Georgia, serif;
+  font-weight: 400;
+  color: #f0e6d2;
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.orientation {
+  color: $gold;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+
+.meaning {
+  line-height: 1.55;
+  color: rgba(232, 226, 240, 0.9);
+  margin: 0;
+}

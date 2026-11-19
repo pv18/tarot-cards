@@ -1,0 +1,114 @@
+$gold: #d4af37;
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subtitle {
+  color: rgba(232, 226, 240, 0.6);
+  margin: 8px 0 24px;
+}
+
+.questionInput {
+  max-width: 480px;
+  margin: 0 auto 28px;
+  display: block;
+}
+
+.spread {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.slot {
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  img {
+    width: 100%;
+    aspect-ratio: 170 / 310;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    box-shadow: 0 6px 22px rgba(212, 175, 55, 0.14);
+    animation: deal-in 0.45s ease;
+  }
+}
+
+.imgReversed {
+  transform: rotate(180deg);
+}
+
+.placeholder {
+  width: 100%;
+  aspect-ratio: 170 / 310;
+  border-radius: 10px;
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  background: rgba(232, 226, 240, 0.03);
+}
+
+.cardName {
+  font-size: 13px;
+  color: rgba(232, 226, 240, 0.85);
+}
+
+.position {
+  font-size: 12px;
+  color: rgba(232, 226, 240, 0.55);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.readings {
+  max-width: 640px;
+  margin: 44px auto 0;
+  text-align: left;
+}
+
+.reading {
+  margin-bottom: 22px;
+}
+
+.readingTitle {
+  font-family: 'Prata', Georgia, serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #f0e6d2;
+  margin: 0 0 6px;
+}
+
+.orientation {
+  color: $gold;
+  background: rgba(212, 175, 55, 0.12);
+  border-color: transparent;
+}
+
+.meaning {
+  line-height: 1.6;
+  color: rgba(232, 226, 240, 0.9);
+  margin: 8px 0 0;
+}
+
+@keyframes deal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

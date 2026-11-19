@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Popconfirm, Tag, Typography } from 'antd';
 import { drawRandomCard } from '../../utils/deck';
+import { saveReading } from '../../utils/history';
 import { cardImage, getCardById } from '../../data/cards';
 import { type ICardDrawn } from '../../types/types';
 import s from './CardOfDay.module.scss';
@@ -50,6 +51,12 @@ export const CardOfDay: React.FC = () => {
       reversed: next.reversed,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    saveReading({
+      id: crypto.randomUUID(),
+      type: 'day',
+      date: new Date().toISOString(),
+      cards: [{ cardId: next.card.id, reversed: next.reversed }],
+    });
     setDraw(next);
     setRevealed(false);
     // даём браузеру отрисовать рубашку, затем запускаем переворот

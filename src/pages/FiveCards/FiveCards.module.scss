@@ -8,7 +8,13 @@ $gold: #d4af37;
 
 .subtitle {
   color: rgba(232, 226, 240, 0.6);
-  margin: 8px 0 32px;
+  margin: 8px 0 24px;
+}
+
+.questionInput {
+  max-width: 480px;
+  margin: 0 auto 28px;
+  display: block;
 }
 
 .spread {

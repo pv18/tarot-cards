@@ -24,3 +24,21 @@ export const SUIT_TITLES: Record<Suit, string> = {
   pentacles: 'Пентакли',
   wands: 'Посохи',
 };
+
+export type ReadingType = 'day' | 'three' | 'five' | 'celtic';
+
+export interface IReadingCard {
+  cardId: number;
+  reversed: boolean;
+  /** Название позиции расклада, если она есть */
+  position?: string;
+}
+
+export interface IReading {
+  id: string;
+  type: ReadingType;
+  /** ISO-дата создания */
+  date: string;
+  question?: string;
+  cards: IReadingCard[];
+}
