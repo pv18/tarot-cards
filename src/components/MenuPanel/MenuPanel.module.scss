@@ -1,3 +1,17 @@
 .MenuPanel {
-  margin: 15px 0 0 0;
+  margin: 0;
+  position: sticky;
+  top: 0;
+  padding-bottom: 20px;
+}
+
+.brand {
+  font-family: 'Prata', Georgia, serif;
+  font-size: 26px;
+  color: #d4af37;
+  text-align: center;
+  padding: 22px 0 18px;
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }

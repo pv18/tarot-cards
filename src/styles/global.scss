@@ -1,0 +1,55 @@
+$bg-deep: #0a070f;
+$bg-mid: #120c1b;
+$bg-top: #191226;
+$gold: #d4af37;
+$text-warm: #f0e6d2;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  color: #e8e2f0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: $bg-mid;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.4) 0.5px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.22) 0.5px, transparent 1px),
+    radial-gradient(ellipse at 50% -20%, rgba(120, 82, 180, 0.25), transparent 55%),
+    linear-gradient(180deg, $bg-top 0%, $bg-mid 55%, $bg-deep 100%);
+  background-size:
+    340px 300px,
+    190px 170px,
+    100% 100%,
+    100% 100%;
+  background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+.tarot-heading {
+  font-family: 'Prata', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  color: $text-warm;
+  letter-spacing: 0.02em;
+}
+
+.tarot-gold {
+  color: $gold;
+}
+
+.tarot-divider {
+  height: 1px;
+  border: 0;
+  margin: 16px 0;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.55), transparent);
+}

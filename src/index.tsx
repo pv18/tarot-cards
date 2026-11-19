@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
-import 'antd/dist/reset.css';
 import { BrowserRouter } from 'react-router-dom';
+import '@fontsource/prata';
+import './styles/global.scss';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
