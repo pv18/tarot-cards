@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Input, Typography } from 'antd';
 import { shuffle } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { useSharedReading } from '../../hooks/useSharedReading';
+import { SharedReading } from '../../components/SharedReading/SharedReading';
+import { ShareButton } from '../../components/ShareButton/ShareButton';
 import { cardImage, cards, getCardById } from '../../data/cards';
 import s from './FiveCards.module.scss';
 
@@ -9,6 +12,7 @@ const DECK_IDS = cards.map((c) => c.id);
 const SPREAD_SIZE = 5;
 
 export const FiveCards = () => {
+  const [shared, clearShared] = useSharedReading();
   const [deck, setDeck] = useState<number[]>(DECK_IDS);
   const [drawn, setDrawn] = useState<number[]>([]);
   const [question, setQuestion] = useState('');
@@ -38,6 +42,14 @@ export const FiveCards = () => {
     setDeck(DECK_IDS);
     setDrawn([]);
   };
+
+  if (shared) {
+    return (
+      <div className={s.container}>
+        <SharedReading reading={shared} onClear={clearShared} />
+      </div>
+    );
+  }
 
   return (
     <div className={s.container}>
@@ -96,6 +108,16 @@ export const FiveCards = () => {
         >
           Заново
         </Button>
+        {drawn.length === SPREAD_SIZE && (
+          <ShareButton
+            reading={{
+              type: 'five',
+              date: new Date().toISOString(),
+              question: question.trim() || undefined,
+              cards: drawn.map((cardId) => ({ cardId, reversed: false })),
+            }}
+          />
+        )}
       </div>
     </div>
   );

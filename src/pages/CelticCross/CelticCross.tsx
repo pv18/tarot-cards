@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Input, Tag, Typography } from 'antd';
 import { drawCard, shuffle } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { useSharedReading } from '../../hooks/useSharedReading';
+import { SharedReading } from '../../components/SharedReading/SharedReading';
+import { ShareButton } from '../../components/ShareButton/ShareButton';
 import { cardImage, cards } from '../../data/cards';
 import { CELTIC_POSITIONS } from '../../data/spreads';
 import { type ICard, type ICardDrawn } from '../../types/types';
@@ -24,6 +27,7 @@ const CELL: Record<number, [number, number]> = {
 };
 
 export const CelticCross = () => {
+  const [shared, clearShared] = useSharedReading();
   const [deck, setDeck] = useState<ICard[]>(shuffle(cards));
   const [drawn, setDrawn] = useState<ICardDrawn[]>([]);
   const [question, setQuestion] = useState('');
@@ -110,6 +114,14 @@ export const CelticCross = () => {
     );
   };
 
+  if (shared) {
+    return (
+      <div className={s.container}>
+        <SharedReading reading={shared} onClear={clearShared} />
+      </div>
+    );
+  }
+
   return (
     <div className={s.container}>
       <h1>Кельтский крест</h1>
@@ -150,6 +162,20 @@ export const CelticCross = () => {
         >
           Заново
         </Button>
+        {drawn.length === SPREAD_SIZE && (
+          <ShareButton
+            reading={{
+              type: 'celtic',
+              date: new Date().toISOString(),
+              question: question.trim() || undefined,
+              cards: drawn.map((d, i) => ({
+                cardId: d.card.id,
+                reversed: d.reversed,
+                position: `${i + 1}. ${CELTIC_POSITIONS[i].name}`,
+              })),
+            }}
+          />
+        )}
       </div>
 
       {drawn.length === SPREAD_SIZE && (

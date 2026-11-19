@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Popconfirm, Tag, Typography } from 'antd';
 import { drawRandomCard } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { useSharedReading } from '../../hooks/useSharedReading';
+import { SharedReading } from '../../components/SharedReading/SharedReading';
+import { ShareButton } from '../../components/ShareButton/ShareButton';
 import { cardImage, getCardById } from '../../data/cards';
 import { type ICardDrawn } from '../../types/types';
 import s from './CardOfDay.module.scss';
@@ -33,6 +36,7 @@ const loadStoredDraw = (): ICardDrawn | null => {
 };
 
 export const CardOfDay: React.FC = () => {
+  const [shared, clearShared] = useSharedReading();
   const [initial] = useState(loadStoredDraw);
   const [draw, setDraw] = useState<ICardDrawn | null>(initial);
   const [revealed, setRevealed] = useState(Boolean(initial));
@@ -71,6 +75,14 @@ export const CardOfDay: React.FC = () => {
 
   const orientation = draw?.reversed ? 'перевёрнутое' : 'прямое';
 
+  if (shared) {
+    return (
+      <div className={s.page}>
+        <SharedReading reading={shared} onClear={clearShared} />
+      </div>
+    );
+  }
+
   return (
     <div className={s.page}>
       <header className={s.header}>
@@ -107,15 +119,24 @@ export const CardOfDay: React.FC = () => {
               </Button>
             )}
             {draw && revealed && (
-              <Popconfirm
-                title='Тянуть другую карту?'
-                description='Карта дня обычно остаётся на весь день.'
-                okText='Тянуть'
-                cancelText='Оставить'
-                onConfirm={handleReset}
-              >
-                <Button>Тянуть заново</Button>
-              </Popconfirm>
+              <>
+                <Popconfirm
+                  title='Тянуть другую карту?'
+                  description='Карта дня обычно остаётся на весь день.'
+                  okText='Тянуть'
+                  cancelText='Оставить'
+                  onConfirm={handleReset}
+                >
+                  <Button>Тянуть заново</Button>
+                </Popconfirm>
+                <ShareButton
+                  reading={{
+                    type: 'day',
+                    date: new Date().toISOString(),
+                    cards: [{ cardId: draw.card.id, reversed: draw.reversed }],
+                  }}
+                />
+              </>
             )}
           </div>
         </div>

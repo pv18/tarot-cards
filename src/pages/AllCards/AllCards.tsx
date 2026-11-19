@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Modal, Segmented, Tag } from 'antd';
+import { Input, Modal, Segmented, Tag } from 'antd';
 import { cardImage, cards } from '../../data/cards';
 import { type ICard, SUIT_TITLES, type Suit } from '../../types/types';
 import s from './AllCards.module.scss';
@@ -17,22 +17,33 @@ const filterOptions: { label: string; value: Filter }[] = [
 
 export const AllCards: React.FC = () => {
   const [filter, setFilter] = useState<Filter>('all');
+  const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<ICard | null>(null);
 
-  const visible = useMemo(
-    () => (filter === 'all' ? cards : cards.filter((c) => c.suit === filter)),
-    [filter]
-  );
+  const visible = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return cards
+      .filter((c) => filter === 'all' || c.suit === filter)
+      .filter((c) => c.name.toLowerCase().includes(query));
+  }, [filter, search]);
 
   return (
     <div className={s.page}>
       <h1>Все карты</h1>
-      <Segmented
-        className={s.filter}
-        options={filterOptions}
-        value={filter}
-        onChange={(value) => setFilter(value as Filter)}
-      />
+      <div className={s.toolbar}>
+        <Input
+          className={s.search}
+          placeholder='Поиск по названию'
+          allowClear
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Segmented
+          options={filterOptions}
+          value={filter}
+          onChange={(value) => setFilter(value as Filter)}
+        />
+      </div>
       <div className={s.grid}>
         {visible.map((card) => (
           <button

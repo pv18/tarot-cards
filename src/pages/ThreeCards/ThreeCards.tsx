@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Input, Tag, Typography } from 'antd';
 import { drawCard, shuffle } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
+import { useSharedReading } from '../../hooks/useSharedReading';
+import { SharedReading } from '../../components/SharedReading/SharedReading';
+import { ShareButton } from '../../components/ShareButton/ShareButton';
 import { cardImage, cards } from '../../data/cards';
 import { THREE_POSITIONS } from '../../data/spreads';
 import { type ICard, type ICardDrawn } from '../../types/types';
@@ -10,6 +13,7 @@ import s from './ThreeCards.module.scss';
 const SPREAD_SIZE = 3;
 
 export const ThreeCards = () => {
+  const [shared, clearShared] = useSharedReading();
   const [deck, setDeck] = useState<ICard[]>(shuffle(cards));
   const [drawn, setDrawn] = useState<ICardDrawn[]>([]);
   const [question, setQuestion] = useState('');
@@ -46,6 +50,14 @@ export const ThreeCards = () => {
     setDeck(shuffle(cards));
     setDrawn([]);
   };
+
+  if (shared) {
+    return (
+      <div className={s.container}>
+        <SharedReading reading={shared} onClear={clearShared} />
+      </div>
+    );
+  }
 
   return (
     <div className={s.container}>
@@ -110,6 +122,20 @@ export const ThreeCards = () => {
         >
           Заново
         </Button>
+        {drawn.length === SPREAD_SIZE && (
+          <ShareButton
+            reading={{
+              type: 'three',
+              date: new Date().toISOString(),
+              question: question.trim() || undefined,
+              cards: drawn.map((d, i) => ({
+                cardId: d.card.id,
+                reversed: d.reversed,
+                position: THREE_POSITIONS[i].name,
+              })),
+            }}
+          />
+        )}
       </div>
 
       {drawn.length === SPREAD_SIZE && (

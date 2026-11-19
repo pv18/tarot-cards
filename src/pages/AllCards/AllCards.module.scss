@@ -5,8 +5,16 @@ $gold: #d4af37;
   margin: 0 auto;
 }
 
-.filter {
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
   margin: 16px 0 24px;
+}
+
+.search {
+  max-width: 240px;
 }
 
 .grid {

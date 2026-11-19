@@ -1,0 +1,16 @@
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.banner {
+  font-family: 'Prata', Georgia, serif;
+  color: #f0e6d2;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
+}
