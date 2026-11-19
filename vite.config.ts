@@ -17,4 +17,9 @@ export default defineConfig({
       },
     ],
   },
+  test: {
+    environment: 'jsdom',
+    // globals нужны Testing Library для автоматической очистки между тестами
+    globals: true,
+  },
 });
