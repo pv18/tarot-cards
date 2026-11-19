@@ -27,6 +27,21 @@ $gold: #d4af37;
   margin-bottom: 36px;
 }
 
+@media (max-width: 620px) {
+  .board {
+    grid-template-columns: repeat(4, 72px);
+    gap: 8px;
+  }
+
+  .crossImg,
+  .crossImgReversed,
+  .crossPlaceholder {
+    width: 126px;
+    height: 72px;
+    top: 40%;
+  }
+}
+
 .slot {
   display: flex;
   flex-direction: column;
