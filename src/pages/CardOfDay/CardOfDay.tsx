@@ -96,12 +96,14 @@ export const CardOfDay: React.FC = () => {
         <div className={s.cardArea}>
           <div className={`${s.flip} ${revealed ? s.flipped : ''}`}>
             <div className={s.flipInner}>
-              <div
+              <button
+                type='button'
                 className={s.faceBack}
                 onClick={draw ? undefined : handleDraw}
+                aria-label='Тянуть карту дня'
               >
                 <span className={s.backSymbol}>☾</span>
-              </div>
+              </button>
               <div className={s.faceFront}>
                 {draw && (
                   <img
@@ -143,7 +145,7 @@ export const CardOfDay: React.FC = () => {
           </div>
         </div>
 
-        <section className={s.reading}>
+        <section className={s.reading} aria-live='polite'>
           {draw ? (
             <>
               <h2 className={s.cardName}>{draw.card.name}</h2>

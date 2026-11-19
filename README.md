@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Таро — карта дня и расклады
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Сайт раскладов Таро: карта дня с толкованием, классические расклады, вся
+колода из 78 арканов с прямыми и перевёрнутыми значениями. Тёмная «мистическая»
+тема, PWA с офлайн-режимом.
 
-## Available Scripts
+## Возможности
 
-In the project directory, you can run:
+- **Карта дня** — одна карта на день с 3D-переворотом и толкованием
+- **Три карты** — прошлое, настоящее, будущее
+- **Пять карт** — свободный расклад
+- **Кельтский крест** — десять карт по классической схеме
+- **Все карты** — галерея с фильтрами по мастям, поиском и полными значениями
+- **История** — расклады сохраняются локально, с вопросами и датами
+- **Поделиться** — расклад можно отправить ссылкой
+- Звуки колоды (по умолчанию выключены), офлайн-режим через service worker
 
-### `yarn start`
+## Стек
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+React 18 · TypeScript (strict) · Vite · antd 5 · react-router 6 · Sass (CSS
+Modules) · Vitest · PWA (vite-plugin-pwa)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Команды
 
-### `yarn test`
+```bash
+yarn install      # установка зависимостей
+yarn dev          # dev-сервер на http://localhost:5173
+yarn build        # проверка типов + прод-сборка
+yarn preview      # предпросмотр прод-сборки
+yarn lint         # ESLint
+yarn format       # Prettier
+yarn test:run     # тесты (Vitest)
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Перед коммитом хуки сами прогоняют `lint-staged`; сообщение коммита проверяет
+commitlint: `<type>: <описание на русском>`.
 
-### `yarn build`
+Колода — 78 карт в `public/img/<id>.jpg` (1 = Шут, 23 = Туз Кубков, 37 = Туз
+Мечей, 51 = Туз Пентаклей, 65 = Туз Посохов). Данные и толкования — в
+`src/data/`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Подробные соглашения по коду — в [AGENTS.md](AGENTS.md), план развития — в
+[ROADMAP.md](ROADMAP.md).
