@@ -1,14 +1,39 @@
-import React from 'react';
-import { ConfigProvider, Layout, theme } from 'antd';
+import React, { lazy, Suspense } from 'react';
+import { ConfigProvider, Layout, Spin, theme } from 'antd';
 import ruRU from 'antd/locale/ru_RU';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from '../../routes';
-import { CardOfDay } from '../../pages/CardOfDay/CardOfDay';
-import { AllCards } from '../../pages/AllCards/AllCards';
-import { FiveCards } from '../../pages/FiveCards/FiveCards';
 import { MenuPanel } from '../MenuPanel/MenuPanel';
 
+// страницы грузим лениво — каждый расклад в своём чанке
+const CardOfDay = lazy(() =>
+  import('../../pages/CardOfDay/CardOfDay').then((m) => ({
+    default: m.CardOfDay,
+  }))
+);
+const AllCards = lazy(() =>
+  import('../../pages/AllCards/AllCards').then((m) => ({ default: m.AllCards }))
+);
+const FiveCards = lazy(() =>
+  import('../../pages/FiveCards/FiveCards').then((m) => ({
+    default: m.FiveCards,
+  }))
+);
+
 const { Sider, Content } = Layout;
+
+const PageLoader: React.FC = () => (
+  <div
+    style={{
+      minHeight: '50vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <Spin size='large' />
+  </div>
+);
 
 const App: React.FC = () => (
   <ConfigProvider
@@ -46,11 +71,13 @@ const App: React.FC = () => (
       </Sider>
       <Layout>
         <Content style={{ padding: '28px 20px 56px' }}>
-          <Routes>
-            <Route path={ROUTES.HOME} element={<CardOfDay />} />
-            <Route path={ROUTES.CARDS} element={<AllCards />} />
-            <Route path={ROUTES.FIVE} element={<FiveCards />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path={ROUTES.HOME} element={<CardOfDay />} />
+              <Route path={ROUTES.CARDS} element={<AllCards />} />
+              <Route path={ROUTES.FIVE} element={<FiveCards />} />
+            </Routes>
+          </Suspense>
         </Content>
       </Layout>
     </Layout>

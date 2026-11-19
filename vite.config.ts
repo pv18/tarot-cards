@@ -17,6 +17,16 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          antd: ['antd'],
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     // globals нужны Testing Library для автоматической очистки между тестами
