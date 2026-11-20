@@ -4,6 +4,15 @@ $bg-top: #191226;
 $gold: #d4af37;
 $text-warm: #f0e6d2;
 
+// CSS-переменные для UI-кита (src/components/ui): SCSS-переменные из этого
+// файла в module.scss не попадают, поэтому общие значения дублируем здесь
+:root {
+  --radius: 14px;
+  --text: #e8e2f0;
+  --gold: #d4af37;
+  --danger: #e26d5a;
+}
+
 * {
   box-sizing: border-box;
 }
