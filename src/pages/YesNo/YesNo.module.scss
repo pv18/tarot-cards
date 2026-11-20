@@ -1,5 +1,3 @@
-$gold: #d4af37;
-
 .container {
   max-width: 640px;
   margin: 0 auto;
@@ -7,7 +5,7 @@ $gold: #d4af37;
 }
 
 .subtitle {
-  color: rgba(232, 226, 240, 0.6);
+  color: color-mix(in srgb, var(--text) 60%, transparent);
   margin: 8px 0 24px;
 }
 
@@ -31,8 +29,8 @@ $gold: #d4af37;
   object-fit: cover;
   display: block;
   border-radius: 12px;
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.16);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--accent) 16%, transparent);
   animation: deal-in 0.5s ease;
 }
 
@@ -44,15 +42,16 @@ $gold: #d4af37;
   width: 210px;
   aspect-ratio: 170 / 310;
   border-radius: 12px;
-  border: 1px dashed rgba(212, 175, 55, 0.35);
-  background: rgba(232, 226, 240, 0.03);
+  border: 1px dashed color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--text) 3%, transparent);
 }
 
 .verdict {
-  font-family: 'Prata', Georgia, serif;
-  font-size: 44px;
-  color: $gold;
-  text-shadow: 0 0 26px rgba(212, 175, 55, 0.4);
+  font-family: var(--font-heading);
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--accent);
+  text-shadow: 0 0 26px color-mix(in srgb, var(--accent) 40%, transparent);
   letter-spacing: 0.2em;
   animation: verdict-in 0.6s ease 0.35s both;
 }
@@ -74,25 +73,22 @@ $gold: #d4af37;
 }
 
 .orientation {
-  color: $gold;
-  background: rgba(212, 175, 55, 0.12);
-  border-color: transparent;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .keywords {
   margin-top: 10px;
-
-  :global(.ant-tag) {
-    color: rgba(240, 230, 210, 0.85);
-    background: rgba(232, 226, 240, 0.08);
-    border-color: transparent;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
 }
 
 .meaning {
   text-align: left;
   line-height: 1.65;
-  color: rgba(232, 226, 240, 0.92);
+  color: color-mix(in srgb, var(--text) 92%, transparent);
 }
 
 @keyframes deal-in {

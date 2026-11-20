@@ -6,8 +6,8 @@
 
 .input {
   width: 100%;
-  background: rgba(232, 226, 240, 0.06);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   border-radius: var(--radius);
   color: var(--text);
   padding: 10px 14px;
@@ -19,12 +19,12 @@
     box-shadow 0.2s ease;
 
   &::placeholder {
-    color: rgba(232, 226, 240, 0.35);
+    color: color-mix(in srgb, var(--text) 35%, transparent);
   }
 
   &:focus {
-    border-color: rgba(212, 175, 55, 0.7);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+    border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
   &:disabled {
@@ -46,14 +46,14 @@
   height: 20px;
   border-radius: 50%;
   border: none;
-  background: rgba(232, 226, 240, 0.08);
-  color: rgba(232, 226, 240, 0.6);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  color: color-mix(in srgb, var(--text) 60%, transparent);
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
 
   &:hover {
     color: var(--text);
-    background: rgba(232, 226, 240, 0.15);
+    background: color-mix(in srgb, var(--text) 15%, transparent);
   }
 }

@@ -1,16 +1,82 @@
-$bg-deep: #0a070f;
-$bg-mid: #120c1b;
-$bg-top: #191226;
-$gold: #d4af37;
-$text-warm: #f0e6d2;
-
-// CSS-переменные для UI-кита (src/components/ui): SCSS-переменные из этого
-// файла в module.scss не попадают, поэтому общие значения дублируем здесь
+// ТЕМЫ. Все цвета интерфейса читаются только из этих токенов;
+// тёмные темы переопределяют набор целиком через [data-theme].
 :root {
+  color-scheme: dark;
   --radius: 14px;
+
+  // Полночь — базовая тема (фиолетовое небо + золото)
+  --bg-deep: #0a070f;
+  --bg-mid: #120c1b;
+  --bg-top: #191226;
+  --bg-glow: rgba(120, 82, 180, 0.25);
+  --surface: rgba(18, 12, 27, 0.72);
+  --surface-solid: rgba(18, 12, 27, 0.97);
+  --surface-gradient: linear-gradient(170deg, #191226, #120c1b);
+  --card-back-gradient: linear-gradient(160deg, #2a1f3d, #1a1228 55%, #120c1c);
+  --accent: #d4af37;
+  --accent-deep: #b8932a;
+  --accent-gradient: linear-gradient(160deg, var(--accent), var(--accent-deep));
+  --accent-contrast: #1a1228;
   --text: #e8e2f0;
-  --gold: #d4af37;
+  --text-warm: #f0e6d2;
   --danger: #e26d5a;
+
+  --font-heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+}
+
+// Обсидиан — строгий ноктюрн: чёрно-серый + лунное серебро
+[data-theme='obsidian'] {
+  --bg-deep: #050608;
+  --bg-mid: #0b0d12;
+  --bg-top: #141821;
+  --bg-glow: rgba(96, 122, 178, 0.16);
+  --surface: rgba(12, 14, 20, 0.72);
+  --surface-solid: rgba(12, 14, 20, 0.97);
+  --surface-gradient: linear-gradient(170deg, #141821, #0b0d12);
+  --card-back-gradient: linear-gradient(160deg, #232a38, #12161f 55%, #0b0d12);
+  --accent: #b9c6dd;
+  --accent-deep: #8fa1bd;
+  --accent-contrast: #0b0d12;
+  --text: #dde3ee;
+  --text-warm: #e9eef7;
+  --danger: #cf6b62;
+}
+
+// Багровая полночь — винный бархат гадалки + старое золото
+[data-theme='crimson'] {
+  --bg-deep: #0f0409;
+  --bg-mid: #1c0a12;
+  --bg-top: #2a1119;
+  --bg-glow: rgba(186, 62, 84, 0.22);
+  --surface: rgba(28, 10, 18, 0.72);
+  --surface-solid: rgba(28, 10, 18, 0.97);
+  --surface-gradient: linear-gradient(170deg, #2a1119, #1c0a12);
+  --card-back-gradient: linear-gradient(160deg, #3a1a24, #24101a 55%, #170a10);
+  --accent: #d9a05a;
+  --accent-deep: #b27a35;
+  --accent-contrast: #240d06;
+  --text: #efe0d6;
+  --text-warm: #f7e9dd;
+  --danger: #e26d5a;
+}
+
+// Ведьмин лес — тёмная чаща + изумруд и травы
+[data-theme='forest'] {
+  --bg-deep: #060b07;
+  --bg-mid: #0c140d;
+  --bg-top: #13201a;
+  --bg-glow: rgba(72, 150, 104, 0.18);
+  --surface: rgba(12, 20, 13, 0.72);
+  --surface-solid: rgba(12, 20, 13, 0.97);
+  --surface-gradient: linear-gradient(170deg, #13201a, #0c140d);
+  --card-back-gradient: linear-gradient(160deg, #1c3122, #122417 55%, #0b150e);
+  --accent: #55b98c;
+  --accent-deep: #33916a;
+  --accent-contrast: #07130c;
+  --text: #dcecdc;
+  --text-warm: #e9f5e9;
+  --danger: #d96d5a;
 }
 
 * {
@@ -26,16 +92,17 @@ body,
 // фон живёт на html, чтобы декоративные слои body::before/::after (z-index: -1)
 // были видны сквозь прозрачный body и не перекрывали контент
 html {
-  background-color: $bg-mid;
+  background-color: var(--bg-mid);
   background-image:
     radial-gradient(rgba(255, 255, 255, 0.4) 0.5px, transparent 1px),
     radial-gradient(rgba(255, 255, 255, 0.22) 0.5px, transparent 1px),
-    radial-gradient(
-      ellipse at 50% -20%,
-      rgba(120, 82, 180, 0.25),
-      transparent 55%
-    ),
-    linear-gradient(180deg, $bg-top 0%, $bg-mid 55%, $bg-deep 100%);
+    radial-gradient(ellipse at 50% -20%, var(--bg-glow), transparent 55%),
+    linear-gradient(
+      180deg,
+      var(--bg-top) 0%,
+      var(--bg-mid) 55%,
+      var(--bg-deep) 100%
+    );
   background-size:
     340px 300px,
     190px 170px,
@@ -46,12 +113,8 @@ html {
 
 body {
   margin: 0;
-  color: #e8e2f0;
-  font-family:
-    'Segoe UI',
-    system-ui,
-    -apple-system,
-    sans-serif;
+  color: var(--text);
+  font-family: var(--font-body);
   background: transparent;
 }
 
@@ -68,7 +131,7 @@ body::after {
 body::before {
   background-image:
     radial-gradient(rgba(255, 255, 255, 0.5) 0.6px, transparent 1.2px),
-    radial-gradient(rgba(212, 175, 55, 0.45) 0.7px, transparent 1.3px);
+    radial-gradient(rgba(255, 255, 255, 0.35) 0.7px, transparent 1.3px);
   background-size:
     230px 210px,
     400px 360px;
@@ -99,14 +162,14 @@ h2,
 h3,
 h4,
 .tarot-heading {
-  font-family: 'Prata', Georgia, 'Times New Roman', serif;
-  font-weight: 400;
-  color: $text-warm;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-warm);
   letter-spacing: 0.02em;
 }
 
 .tarot-gold {
-  color: $gold;
+  color: var(--accent);
 }
 
 .tarot-divider {
@@ -116,7 +179,7 @@ h4,
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(212, 175, 55, 0.55),
+    color-mix(in srgb, var(--accent) 55%, transparent),
     transparent
   );
 }

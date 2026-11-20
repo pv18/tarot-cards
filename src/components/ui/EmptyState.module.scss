@@ -10,13 +10,13 @@
 .icon {
   font-size: 42px;
   line-height: 1;
-  color: rgba(212, 175, 55, 0.55);
+  color: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .text {
   margin: 0;
   max-width: 420px;
-  color: rgba(232, 226, 240, 0.6);
+  color: color-mix(in srgb, var(--text) 60%, transparent);
   font-size: 14px;
   line-height: 1.5;
 }

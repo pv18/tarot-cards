@@ -8,8 +8,8 @@
 }
 
 .banner {
-  font-family: 'Prata', Georgia, serif;
-  color: #f0e6d2;
+  font-family: var(--font-heading);
+  color: var(--text-warm);
   font-size: 18px;
   text-align: center;
   margin: 0;

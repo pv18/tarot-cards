@@ -1,6 +1,3 @@
-$gold: #d4af37;
-$gold-glow: rgba(212, 175, 55, 0.4);
-
 .page {
   max-width: 960px;
   margin: 0 auto;
@@ -14,12 +11,12 @@ $gold-glow: rgba(212, 175, 55, 0.4);
 .title {
   font-size: 34px;
   margin: 0;
-  text-shadow: 0 0 24px $gold-glow;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .date {
   margin: 8px 0 0;
-  color: rgba(232, 226, 240, 0.65);
+  color: color-mix(in srgb, var(--text) 65%, transparent);
   letter-spacing: 0.08em;
 }
 
@@ -73,28 +70,28 @@ $gold-glow: rgba(212, 175, 55, 0.4);
   background:
     radial-gradient(
       circle at 50% 50%,
-      rgba(212, 175, 55, 0.16),
+      color-mix(in srgb, var(--accent) 16%, transparent),
       transparent 42%
     ),
     repeating-linear-gradient(
       45deg,
-      rgba(212, 175, 55, 0.06) 0 2px,
+      color-mix(in srgb, var(--accent) 6%, transparent) 0 2px,
       transparent 2px 10px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(212, 175, 55, 0.06) 0 2px,
+      color-mix(in srgb, var(--accent) 6%, transparent) 0 2px,
       transparent 2px 10px
     ),
-    linear-gradient(160deg, #2a1f3d, #1a1228 55%, #120c1c);
-  border: 1px solid rgba(212, 175, 55, 0.5);
+    var(--card-back-gradient);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
   box-shadow:
-    0 0 26px rgba(212, 175, 55, 0.12),
+    0 0 26px color-mix(in srgb, var(--accent) 12%, transparent),
     inset 0 0 34px rgba(0, 0, 0, 0.5);
 
   &:hover {
     box-shadow:
-      0 0 34px rgba(212, 175, 55, 0.25),
+      0 0 34px color-mix(in srgb, var(--accent) 25%, transparent),
       inset 0 0 34px rgba(0, 0, 0, 0.5);
   }
 }
@@ -106,17 +103,17 @@ $gold-glow: rgba(212, 175, 55, 0.4);
   align-items: center;
   justify-content: center;
   font-size: 46px;
-  color: $gold;
-  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
   border-radius: 50%;
-  text-shadow: 0 0 16px $gold-glow;
+  text-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .faceFront {
   transform: rotateY(180deg);
   overflow: hidden;
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  box-shadow: 0 0 26px rgba(212, 175, 55, 0.14);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .img,
@@ -148,29 +145,25 @@ $gold-glow: rgba(212, 175, 55, 0.4);
 }
 
 .orientationTag {
-  color: $gold;
-  background: rgba(212, 175, 55, 0.12);
-  border-color: transparent;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
   letter-spacing: 0.05em;
 }
 
 .keywords {
   margin-top: 12px;
-
-  :global(.ant-tag) {
-    color: rgba(240, 230, 210, 0.85);
-    background: rgba(232, 226, 240, 0.08);
-    border-color: transparent;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .text {
   font-size: 16px;
   line-height: 1.65;
-  color: rgba(232, 226, 240, 0.92);
+  color: color-mix(in srgb, var(--text) 92%, transparent);
 }
 
 .hint {
-  color: rgba(232, 226, 240, 0.45);
+  color: color-mix(in srgb, var(--text) 45%, transparent);
   font-size: 13px;
 }

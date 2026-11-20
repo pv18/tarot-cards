@@ -6,8 +6,8 @@
 .sider {
   width: 200px;
   flex-shrink: 0;
-  background: rgba(18, 12, 27, 0.72);
-  border-right: 1px solid rgba(212, 175, 55, 0.15);
+  background: var(--surface);
+  border-right: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
 }
 
 .content {
@@ -36,7 +36,7 @@
     left: 0;
     z-index: 900;
     overflow-y: auto;
-    background: rgba(18, 12, 27, 0.97);
+    background: var(--surface-solid);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
     transform: translateX(-100%);
     transition: transform 0.25s ease;
@@ -57,9 +57,9 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    background: rgba(18, 12, 27, 0.9);
-    color: #d4af37;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    background: var(--surface-solid);
+    color: var(--accent);
     font-size: 20px;
     line-height: 1;
     cursor: pointer;
@@ -68,8 +68,8 @@
       box-shadow 0.2s ease;
 
     &:hover {
-      border-color: rgba(212, 175, 55, 0.8);
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.25);
+      border-color: color-mix(in srgb, var(--accent) 80%, transparent);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 25%, transparent);
     }
   }
 }
