@@ -24,3 +24,45 @@
   color: rgba(232, 226, 240, 0.6);
   font-size: 13px;
 }
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  color: rgba(232, 226, 240, 0.75);
+  text-decoration: none;
+  font-size: 14px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background: rgba(232, 226, 240, 0.06);
+    color: #f0e6d2;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(212, 175, 55, 0.6);
+    outline-offset: 1px;
+  }
+}
+
+.itemActive {
+  background: rgba(212, 175, 55, 0.18);
+  color: #f0e6d2;
+}
+
+.icon {
+  display: inline-flex;
+  font-size: 17px;
+  color: rgba(212, 175, 55, 0.8);
+}

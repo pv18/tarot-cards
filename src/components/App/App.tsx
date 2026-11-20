@@ -1,6 +1,4 @@
-import React, { lazy, Suspense } from 'react';
-import { ConfigProvider, Layout, Spin, theme } from 'antd';
-import ruRU from 'antd/locale/ru_RU';
+import React, { lazy, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import {
@@ -9,6 +7,8 @@ import {
   THREE_POSITIONS,
 } from '../../data/spreads';
 import { MenuPanel } from '../MenuPanel/MenuPanel';
+import { Spinner } from '../ui/Spinner';
+import s from './App.module.scss';
 
 // страницы грузим лениво — каждый расклад в своём чанке
 const CardOfDay = lazy(() =>
@@ -41,104 +41,76 @@ const CelticCross = lazy(() =>
   }))
 );
 
-const { Sider, Content } = Layout;
-
 const PageLoader: React.FC = () => (
-  <div
-    style={{
-      minHeight: '50vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
-    <Spin size='large' />
+  <div className={s.loader}>
+    <Spinner />
   </div>
 );
 
-const App: React.FC = () => (
-  <ConfigProvider
-    locale={ruRU}
-    theme={{
-      algorithm: theme.darkAlgorithm,
-      token: {
-        colorPrimary: '#d4af37',
-        colorInfo: '#d4af37',
-        colorBgBase: '#14101c',
-        colorText: '#e8e2f0',
-        borderRadius: 10,
-      },
-      components: {
-        Layout: {
-          bodyBg: 'transparent',
-          siderBg: 'rgba(18, 12, 27, 0.72)',
-        },
-        Menu: {
-          itemBg: 'transparent',
-          darkItemBg: 'transparent',
-          darkItemSelectedBg: 'rgba(212, 175, 55, 0.18)',
-        },
-      },
-    }}
-  >
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        breakpoint='lg'
-        collapsedWidth='0'
-        width={200}
-        style={{ borderRight: '1px solid rgba(212, 175, 55, 0.15)' }}
+const App: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <div className={s.shell}>
+      <button
+        type='button'
+        className={s.burger}
+        aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((v) => !v)}
       >
-        <MenuPanel />
-      </Sider>
-      <Layout>
-        <Content style={{ padding: '28px 20px 56px' }}>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path={ROUTES.HOME} element={<CardOfDay />} />
-              <Route path={ROUTES.CARDS} element={<AllCards />} />
-              <Route path={ROUTES.FIVE} element={<FiveCards />} />
-              <Route
-                path={ROUTES.THREE}
-                element={
-                  <PositionSpread
-                    type='three'
-                    title='Три карты'
-                    subtitle='Прошлое, настоящее и будущее — классический расклад на ситуацию'
-                    positions={THREE_POSITIONS.map((p) => p.name)}
-                  />
-                }
-              />
-              <Route
-                path={ROUTES.RELATIONSHIP}
-                element={
-                  <PositionSpread
-                    type='relationship'
-                    title='Отношения'
-                    subtitle='Пять карт о вас, партнёре и том, что между вами'
-                    positions={RELATIONSHIP_POSITIONS.map((p) => p.name)}
-                  />
-                }
-              />
-              <Route
-                path={ROUTES.CAREER}
-                element={
-                  <PositionSpread
-                    type='career'
-                    title='Работа'
-                    subtitle='Пять карт о делах: силы, препятствия и возможности'
-                    positions={CAREER_POSITIONS.map((p) => p.name)}
-                  />
-                }
-              />
-              <Route path={ROUTES.CELTIC} element={<CelticCross />} />
-              <Route path={ROUTES.YESNO} element={<YesNo />} />
-              <Route path={ROUTES.HISTORY} element={<History />} />
-            </Routes>
-          </Suspense>
-        </Content>
-      </Layout>
-    </Layout>
-  </ConfigProvider>
-);
+        {menuOpen ? '×' : '☰'}
+      </button>
+      <aside className={[s.sider, menuOpen ? s.siderOpen : ''].join(' ')}>
+        <MenuPanel onNavigate={() => setMenuOpen(false)} />
+      </aside>
+      <main className={s.content}>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path={ROUTES.HOME} element={<CardOfDay />} />
+            <Route path={ROUTES.CARDS} element={<AllCards />} />
+            <Route path={ROUTES.FIVE} element={<FiveCards />} />
+            <Route
+              path={ROUTES.THREE}
+              element={
+                <PositionSpread
+                  type='three'
+                  title='Три карты'
+                  subtitle='Прошлое, настоящее и будущее — классический расклад на ситуацию'
+                  positions={THREE_POSITIONS.map((p) => p.name)}
+                />
+              }
+            />
+            <Route
+              path={ROUTES.RELATIONSHIP}
+              element={
+                <PositionSpread
+                  type='relationship'
+                  title='Отношения'
+                  subtitle='Пять карт о вас, партнёре и том, что между вами'
+                  positions={RELATIONSHIP_POSITIONS.map((p) => p.name)}
+                />
+              }
+            />
+            <Route
+              path={ROUTES.CAREER}
+              element={
+                <PositionSpread
+                  type='career'
+                  title='Работа'
+                  subtitle='Пять карт о делах: силы, препятствия и возможности'
+                  positions={CAREER_POSITIONS.map((p) => p.name)}
+                />
+              }
+            />
+            <Route path={ROUTES.CELTIC} element={<CelticCross />} />
+            <Route path={ROUTES.YESNO} element={<YesNo />} />
+            <Route path={ROUTES.HISTORY} element={<History />} />
+          </Routes>
+        </Suspense>
+      </main>
+    </div>
+  );
+};
 
 export default App;
