@@ -1,0 +1,118 @@
+$gold: #d4af37;
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subtitle {
+  color: rgba(232, 226, 240, 0.6);
+  margin: 8px 0 24px;
+}
+
+.questionInput {
+  margin: 0 auto 30px;
+  display: block;
+}
+
+.cardArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.img,
+.imgReversed {
+  width: 210px;
+  aspect-ratio: 170 / 310;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.16);
+  animation: deal-in 0.5s ease;
+}
+
+.imgReversed {
+  transform: rotate(180deg);
+}
+
+.placeholder {
+  width: 210px;
+  aspect-ratio: 170 / 310;
+  border-radius: 12px;
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  background: rgba(232, 226, 240, 0.03);
+}
+
+.verdict {
+  font-family: 'Prata', Georgia, serif;
+  font-size: 44px;
+  color: $gold;
+  text-shadow: 0 0 26px rgba(212, 175, 55, 0.4);
+  letter-spacing: 0.2em;
+  animation: verdict-in 0.6s ease 0.35s both;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.reading {
+  margin-top: 34px;
+}
+
+.cardName {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.orientation {
+  color: $gold;
+  background: rgba(212, 175, 55, 0.12);
+  border-color: transparent;
+}
+
+.keywords {
+  margin-top: 10px;
+
+  :global(.ant-tag) {
+    color: rgba(240, 230, 210, 0.85);
+    background: rgba(232, 226, 240, 0.08);
+    border-color: transparent;
+  }
+}
+
+.meaning {
+  text-align: left;
+  line-height: 1.65;
+  color: rgba(232, 226, 240, 0.92);
+}
+
+@keyframes deal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes verdict-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

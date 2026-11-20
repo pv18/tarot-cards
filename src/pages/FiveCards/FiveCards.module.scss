@@ -51,6 +51,10 @@ $gold: #d4af37;
   background: rgba(232, 226, 240, 0.03);
 }
 
+.imgReversed {
+  transform: rotate(180deg);
+}
+
 .cardName {
   font-size: 13px;
   color: rgba(232, 226, 240, 0.85);

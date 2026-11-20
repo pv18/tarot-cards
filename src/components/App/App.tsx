@@ -3,6 +3,11 @@ import { ConfigProvider, Layout, Spin, theme } from 'antd';
 import ruRU from 'antd/locale/ru_RU';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from '../../routes';
+import {
+  CAREER_POSITIONS,
+  RELATIONSHIP_POSITIONS,
+  THREE_POSITIONS,
+} from '../../data/spreads';
 import { MenuPanel } from '../MenuPanel/MenuPanel';
 
 // страницы грузим лениво — каждый расклад в своём чанке
@@ -19,10 +24,13 @@ const FiveCards = lazy(() =>
     default: m.FiveCards,
   }))
 );
-const ThreeCards = lazy(() =>
-  import('../../pages/ThreeCards/ThreeCards').then((m) => ({
-    default: m.ThreeCards,
+const PositionSpread = lazy(() =>
+  import('../../pages/PositionSpread/PositionSpread').then((m) => ({
+    default: m.PositionSpread,
   }))
+);
+const YesNo = lazy(() =>
+  import('../../pages/YesNo/YesNo').then((m) => ({ default: m.YesNo }))
 );
 const History = lazy(() =>
   import('../../pages/History/History').then((m) => ({ default: m.History }))
@@ -89,8 +97,41 @@ const App: React.FC = () => (
               <Route path={ROUTES.HOME} element={<CardOfDay />} />
               <Route path={ROUTES.CARDS} element={<AllCards />} />
               <Route path={ROUTES.FIVE} element={<FiveCards />} />
-              <Route path={ROUTES.THREE} element={<ThreeCards />} />
+              <Route
+                path={ROUTES.THREE}
+                element={
+                  <PositionSpread
+                    type='three'
+                    title='Три карты'
+                    subtitle='Прошлое, настоящее и будущее — классический расклад на ситуацию'
+                    positions={THREE_POSITIONS.map((p) => p.name)}
+                  />
+                }
+              />
+              <Route
+                path={ROUTES.RELATIONSHIP}
+                element={
+                  <PositionSpread
+                    type='relationship'
+                    title='Отношения'
+                    subtitle='Пять карт о вас, партнёре и том, что между вами'
+                    positions={RELATIONSHIP_POSITIONS.map((p) => p.name)}
+                  />
+                }
+              />
+              <Route
+                path={ROUTES.CAREER}
+                element={
+                  <PositionSpread
+                    type='career'
+                    title='Работа'
+                    subtitle='Пять карт о делах: силы, препятствия и возможности'
+                    positions={CAREER_POSITIONS.map((p) => p.name)}
+                  />
+                }
+              />
               <Route path={ROUTES.CELTIC} element={<CelticCross />} />
+              <Route path={ROUTES.YESNO} element={<YesNo />} />
               <Route path={ROUTES.HISTORY} element={<History />} />
             </Routes>
           </Suspense>

@@ -1,52 +1,17 @@
-﻿import React, { useState } from 'react';
+import React from 'react';
 import { Button, Input, Typography } from 'antd';
-import { shuffle } from '../../utils/deck';
-import { saveReading } from '../../utils/history';
-import { playFlip, playShuffle } from '../../utils/sound';
-import { useSharedReading } from '../../hooks/useSharedReading';
+import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
-import { cardImage, cards, getCardById } from '../../data/cards';
+import { cardImage } from '../../data/cards';
 import s from './FiveCards.module.scss';
 
-const DECK_IDS = cards.map((c) => c.id);
 const SPREAD_SIZE = 5;
 
 export const FiveCards = () => {
-  const [shared, clearShared] = useSharedReading();
-  const [deck, setDeck] = useState<number[]>(DECK_IDS);
-  const [drawn, setDrawn] = useState<number[]>([]);
-  const [question, setQuestion] = useState('');
-
-  const addCard = () => {
-    if (deck.length === 0) return;
-    playFlip();
-    const id = deck[Math.floor(Math.random() * deck.length)];
-    const nextDeck = deck.filter((n) => n !== id);
-    const nextDrawn = [...drawn, id];
-    setDeck(nextDeck);
-    setDrawn(nextDrawn);
-
-    if (nextDrawn.length === SPREAD_SIZE) {
-      saveReading({
-        id: crypto.randomUUID(),
-        type: 'five',
-        date: new Date().toISOString(),
-        question: question.trim() || undefined,
-        cards: nextDrawn.map((cardId) => ({ cardId, reversed: false })),
-      });
-    }
-  };
-
-  const shuffleDeck = () => {
-    playShuffle();
-    setDeck(shuffle(DECK_IDS));
-  };
-
-  const restart = () => {
-    setDeck(DECK_IDS);
-    setDrawn([]);
-  };
+  const spread = useSpread({ type: 'five', size: SPREAD_SIZE });
+  const { shared, clearShared, drawn, question, setQuestion, complete } =
+    spread;
 
   if (shared) {
     return (
@@ -75,15 +40,18 @@ export const FiveCards = () => {
 
       <div className={s.spread}>
         {Array.from({ length: SPREAD_SIZE }, (_, i) => {
-          const id = drawn[i];
-          const card = id !== undefined ? getCardById(id) : null;
+          const draw = drawn[i];
           return (
             <div key={i} className={s.slot}>
-              {card ? (
+              {draw ? (
                 <>
-                  <img src={cardImage(card.id)} alt={card.name} />
+                  <img
+                    className={draw.reversed ? s.imgReversed : s.img}
+                    src={cardImage(draw.card.id)}
+                    alt={draw.card.name}
+                  />
                   <Typography.Text className={s.cardName}>
-                    {card.name}
+                    {draw.card.name}
                   </Typography.Text>
                 </>
               ) : (
@@ -98,28 +66,31 @@ export const FiveCards = () => {
         <Button
           type='primary'
           size='large'
-          disabled={drawn.length >= SPREAD_SIZE}
-          onClick={addCard}
+          disabled={complete}
+          onClick={spread.addCard}
         >
           Взять карту
         </Button>
-        <Button size='large' disabled={drawn.length > 0} onClick={shuffleDeck}>
-          Тасовать карты
-        </Button>
         <Button
           size='large'
-          disabled={drawn.length < SPREAD_SIZE}
-          onClick={restart}
+          disabled={drawn.length > 0}
+          onClick={spread.shuffleDeck}
         >
+          Тасовать карты
+        </Button>
+        <Button size='large' disabled={!complete} onClick={spread.restart}>
           Заново
         </Button>
-        {drawn.length === SPREAD_SIZE && (
+        {complete && (
           <ShareButton
             reading={{
               type: 'five',
               date: new Date().toISOString(),
               question: question.trim() || undefined,
-              cards: drawn.map((cardId) => ({ cardId, reversed: false })),
+              cards: drawn.map((d) => ({
+                cardId: d.card.id,
+                reversed: d.reversed,
+              })),
             }}
           />
         )}

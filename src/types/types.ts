@@ -25,7 +25,8 @@ export const SUIT_TITLES: Record<Suit, string> = {
   wands: 'Посохи',
 };
 
-export type ReadingType = 'day' | 'three' | 'five' | 'celtic';
+export type ReadingType =
+  'day' | 'three' | 'five' | 'celtic' | 'relationship' | 'career' | 'yesno';
 
 export interface IReadingCard {
   cardId: number;

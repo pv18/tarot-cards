@@ -8,6 +8,9 @@ export const READING_LABELS: Record<ReadingType, string> = {
   three: 'Три карты',
   five: 'Пять карт',
   celtic: 'Кельтский крест',
+  relationship: 'Отношения',
+  career: 'Работа',
+  yesno: 'Да / Нет',
 };
 
 export const loadHistory = (): IReading[] => {

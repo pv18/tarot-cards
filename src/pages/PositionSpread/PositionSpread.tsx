@@ -1,58 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Input, Tag, Typography } from 'antd';
-import { drawCard, shuffle } from '../../utils/deck';
-import { saveReading } from '../../utils/history';
-import { playFlip, playShuffle } from '../../utils/sound';
-import { useSharedReading } from '../../hooks/useSharedReading';
+import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
-import { cardImage, cards } from '../../data/cards';
-import { THREE_POSITIONS } from '../../data/spreads';
-import { type ICard, type ICardDrawn } from '../../types/types';
-import s from './ThreeCards.module.scss';
+import { cardImage } from '../../data/cards';
+import { type ReadingType } from '../../types/types';
+import s from './PositionSpread.module.scss';
 
-const SPREAD_SIZE = 3;
+interface PositionSpreadProps {
+  type: ReadingType;
+  title: string;
+  subtitle: string;
+  positions: string[];
+}
 
-export const ThreeCards = () => {
-  const [shared, clearShared] = useSharedReading();
-  const [deck, setDeck] = useState<ICard[]>(shuffle(cards));
-  const [drawn, setDrawn] = useState<ICardDrawn[]>([]);
-  const [question, setQuestion] = useState('');
-
-  const addCard = () => {
-    if (deck.length === 0) return;
-    playFlip();
-    const draw = drawCard(deck);
-    const nextDeck = deck.filter((c) => c.id !== draw.card.id);
-    const nextDrawn = [...drawn, draw];
-    setDeck(nextDeck);
-    setDrawn(nextDrawn);
-
-    if (nextDrawn.length === SPREAD_SIZE) {
-      saveReading({
-        id: crypto.randomUUID(),
-        type: 'three',
-        date: new Date().toISOString(),
-        question: question.trim() || undefined,
-        cards: nextDrawn.map((d, i) => ({
-          cardId: d.card.id,
-          reversed: d.reversed,
-          position: THREE_POSITIONS[i].name,
-        })),
-      });
-    }
-  };
-
-  const shuffleDeck = () => {
-    playShuffle();
-    setDeck(shuffle(cards));
-    setDrawn([]);
-  };
-
-  const restart = () => {
-    setDeck(shuffle(cards));
-    setDrawn([]);
-  };
+/**
+ * Линейный расклад: N карт, у каждой — название позиции.
+ * Используется для «Трёх карт», «Отношений» и «Работы».
+ */
+export const PositionSpread: React.FC<PositionSpreadProps> = ({
+  type,
+  title,
+  subtitle,
+  positions,
+}) => {
+  const spread = useSpread({
+    type,
+    size: positions.length,
+    positionOf: (i) => positions[i],
+  });
+  const { shared, clearShared, drawn, question, setQuestion, complete } =
+    spread;
 
   if (shared) {
     return (
@@ -64,10 +42,8 @@ export const ThreeCards = () => {
 
   return (
     <div className={s.container}>
-      <h1>Три карты</h1>
-      <p className={s.subtitle}>
-        Прошлое, настоящее и будущее — классический расклад на ситуацию
-      </p>
+      <h1>{title}</h1>
+      <p className={s.subtitle}>{subtitle}</p>
 
       <Input
         className={s.questionInput}
@@ -80,10 +56,10 @@ export const ThreeCards = () => {
       />
 
       <div className={s.spread}>
-        {Array.from({ length: SPREAD_SIZE }, (_, i) => {
+        {positions.map((position, i) => {
           const draw = drawn[i];
           return (
-            <div key={i} className={s.slot}>
+            <div key={position} className={s.slot}>
               {draw ? (
                 <>
                   <img
@@ -95,7 +71,7 @@ export const ThreeCards = () => {
                     {draw.card.name}
                   </Typography.Text>
                   <Typography.Text className={s.position}>
-                    {THREE_POSITIONS[i].name}
+                    {position}
                   </Typography.Text>
                 </>
               ) : (
@@ -110,43 +86,43 @@ export const ThreeCards = () => {
         <Button
           type='primary'
           size='large'
-          disabled={drawn.length >= SPREAD_SIZE}
-          onClick={addCard}
+          disabled={complete}
+          onClick={spread.addCard}
         >
           Взять карту
         </Button>
-        <Button size='large' disabled={drawn.length > 0} onClick={shuffleDeck}>
-          Тасовать карты
-        </Button>
         <Button
           size='large'
-          disabled={drawn.length < SPREAD_SIZE}
-          onClick={restart}
+          disabled={drawn.length > 0}
+          onClick={spread.shuffleDeck}
         >
+          Тасовать карты
+        </Button>
+        <Button size='large' disabled={!complete} onClick={spread.restart}>
           Заново
         </Button>
-        {drawn.length === SPREAD_SIZE && (
+        {complete && (
           <ShareButton
             reading={{
-              type: 'three',
+              type,
               date: new Date().toISOString(),
               question: question.trim() || undefined,
               cards: drawn.map((d, i) => ({
                 cardId: d.card.id,
                 reversed: d.reversed,
-                position: THREE_POSITIONS[i].name,
+                position: positions[i],
               })),
             }}
           />
         )}
       </div>
 
-      {drawn.length === SPREAD_SIZE && (
+      {complete && (
         <div className={s.readings}>
           {drawn.map((d, i) => (
             <div key={d.card.id} className={s.reading}>
               <h3 className={s.readingTitle}>
-                {THREE_POSITIONS[i].name} — {d.card.name}
+                {positions[i]} — {d.card.name}
               </h3>
               <Tag bordered={false} className={s.orientation}>
                 {d.reversed ? 'перевёрнутое положение' : 'прямое положение'}

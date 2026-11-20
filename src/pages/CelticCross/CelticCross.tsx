@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Input, Tag, Typography } from 'antd';
-import { drawCard, shuffle } from '../../utils/deck';
-import { saveReading } from '../../utils/history';
 import { playFlip, playShuffle } from '../../utils/sound';
-import { useSharedReading } from '../../hooks/useSharedReading';
+import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
-import { cardImage, cards } from '../../data/cards';
+import { cardImage } from '../../data/cards';
 import { CELTIC_POSITIONS } from '../../data/spreads';
-import { type ICard, type ICardDrawn } from '../../types/types';
 import s from './CelticCross.module.scss';
 
 const SPREAD_SIZE = 10;
@@ -28,45 +25,13 @@ const CELL: Record<number, [number, number]> = {
 };
 
 export const CelticCross = () => {
-  const [shared, clearShared] = useSharedReading();
-  const [deck, setDeck] = useState<ICard[]>(shuffle(cards));
-  const [drawn, setDrawn] = useState<ICardDrawn[]>([]);
-  const [question, setQuestion] = useState('');
-
-  const addCard = () => {
-    if (deck.length === 0) return;
-    playFlip();
-    const draw = drawCard(deck);
-    const nextDeck = deck.filter((c) => c.id !== draw.card.id);
-    const nextDrawn = [...drawn, draw];
-    setDeck(nextDeck);
-    setDrawn(nextDrawn);
-
-    if (nextDrawn.length === SPREAD_SIZE) {
-      saveReading({
-        id: crypto.randomUUID(),
-        type: 'celtic',
-        date: new Date().toISOString(),
-        question: question.trim() || undefined,
-        cards: nextDrawn.map((d, i) => ({
-          cardId: d.card.id,
-          reversed: d.reversed,
-          position: `${i + 1}. ${CELTIC_POSITIONS[i].name}`,
-        })),
-      });
-    }
-  };
-
-  const shuffleDeck = () => {
-    playShuffle();
-    setDeck(shuffle(cards));
-    setDrawn([]);
-  };
-
-  const restart = () => {
-    setDeck(shuffle(cards));
-    setDrawn([]);
-  };
+  const spread = useSpread({
+    type: 'celtic',
+    size: SPREAD_SIZE,
+    positionOf: (i) => `${i + 1}. ${CELTIC_POSITIONS[i].name}`,
+  });
+  const { shared, clearShared, drawn, question, setQuestion, complete } =
+    spread;
 
   const slotFor = (position: number) => {
     const draw = drawn[position - 1];
@@ -150,22 +115,28 @@ export const CelticCross = () => {
         <Button
           type='primary'
           size='large'
-          disabled={drawn.length >= SPREAD_SIZE}
-          onClick={addCard}
+          disabled={complete}
+          onClick={() => {
+            playFlip();
+            spread.addCard();
+          }}
         >
           Взять карту
         </Button>
-        <Button size='large' disabled={drawn.length > 0} onClick={shuffleDeck}>
-          Тасовать карты
-        </Button>
         <Button
           size='large'
-          disabled={drawn.length < SPREAD_SIZE}
-          onClick={restart}
+          disabled={drawn.length > 0}
+          onClick={() => {
+            playShuffle();
+            spread.shuffleDeck();
+          }}
         >
+          Тасовать карты
+        </Button>
+        <Button size='large' disabled={!complete} onClick={spread.restart}>
           Заново
         </Button>
-        {drawn.length === SPREAD_SIZE && (
+        {complete && (
           <ShareButton
             reading={{
               type: 'celtic',
@@ -181,7 +152,7 @@ export const CelticCross = () => {
         )}
       </div>
 
-      {drawn.length === SPREAD_SIZE && (
+      {complete && (
         <div className={s.readings}>
           {drawn.map((d, i) => (
             <div key={d.card.id} className={s.reading}>
