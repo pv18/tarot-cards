@@ -67,8 +67,11 @@ export const CardOfDay: React.FC = () => {
     });
     setDraw(next);
     setRevealed(false);
-    // даём браузеру отрисовать рубашку, затем запускаем переворот
+    // даём браузеру отрисовать рубашку, затем запускаем переворот;
+    // таймер — страховка: во фоновой вкладке rAF заморожен и без него
+    // карта не перевернётся вовсе
     requestAnimationFrame(() => requestAnimationFrame(() => setRevealed(true)));
+    window.setTimeout(() => setRevealed(true), 150);
   };
 
   const handleReset = () => {
