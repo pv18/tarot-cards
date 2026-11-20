@@ -4,8 +4,9 @@
 
 ## Проект
 
-Сайт раскладов Таро. Стек: **React 18 + TypeScript (strict) + Vite + antd 5 +
-react-router 6 + Sass (CSS Modules)**. Колода — 78 карт, картинки в
+Сайт раскладов Таро. Стек: **React 18 + TypeScript (strict) + Vite +
+react-router 6 + Sass (CSS Modules)**. UI — собственный кит
+(`src/components/ui`), внешних UI-библиотек нет. Колода — 78 карт, картинки в
 `public/img/<id>.jpg`, `id` от 1 до 78.
 
 ## Команды
@@ -30,6 +31,8 @@ react-router 6 + Sass (CSS Modules)**. Колода — 78 карт, карти�
 ```
 src/
   components/<Name>/  переиспользуемые компоненты: <Name>.tsx + <Name>.module.scss
+  components/ui/      собственный UI-кит: Button, TextInput, Chip, Modal,
+                      Segmented, Switch, Popconfirm, Spinner, EmptyState
   pages/<Name>/       страницы; маршруты объявляются в src/routes/index.ts
   data/               статические данные колоды (карты, толкования)
   utils/              чистые функции без побочных эффектов (тасовка, тяга карт)
@@ -61,10 +64,14 @@ src/
 - **Состояние**: `useState` для простых значений; производные данные вычислять
   в рендере или через `useMemo` — не дублировать в state.
 - **Стили**: только CSS Modules (`*.module.scss`). Глобальные стили — тема и
-  фон в `src/styles/global.scss`. Цвета не дублировать: `$gold` и переменные
-  темы объявлены один раз, antd-тема — в `ConfigProvider` (`App.tsx`).
-- **ant design**: локаль `ru_RU` уже подключена — новые компоненты не требуют
-  перевода. Стилизовать через токены темы, не через оверрайд CSS.
+  фон в `src/styles/global.scss`. Цвета не дублировать: `$gold` объявлен один
+  раз в `global.scss`, общие значения кита — в `:root`-переменных того же
+  файла. SCSS-переменные в module.scss не импортируются — общие цвета в ките
+  записываются значением, канон — в `global.scss`.
+- **UI-кит** (`src/components/ui`): кнопки, поля, теги, модалки и подтверждения
+  — только из кита, никаких внешних UI-библиотек. Варианты кнопок:
+  `primary` / `ghost` / `danger`. Модалка сама закрывается по Escape и клику по
+  фону.
 - **Форматирование** — зона ответственности Prettier (`.prettierrc.json`),
   линт — ESLint (`eslint.config.js`). Не «править» форматтер руками.
 - **Комментарии** — по делу, объясняют «почему», а не «что». Не оставлять
