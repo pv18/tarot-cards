@@ -1,0 +1,22 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.icon {
+  font-size: 42px;
+  line-height: 1;
+  color: rgba(212, 175, 55, 0.55);
+}
+
+.text {
+  margin: 0;
+  max-width: 420px;
+  color: rgba(232, 226, 240, 0.6);
+  font-size: 14px;
+  line-height: 1.5;
+}
