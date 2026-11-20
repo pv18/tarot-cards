@@ -1,0 +1,134 @@
+.cat {
+  position: fixed;
+  left: 0;
+  bottom: -4px;
+  z-index: 899; // поверх контента, но под модалками
+  width: 130px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+// бег: лёгкая рысь на внутреннем слое, чтобы не мешать translateX пути
+.running .bob {
+  animation: trot 0.42s ease-in-out infinite;
+}
+
+// передышка: сидит неподвижно, только хвост и глаза живут
+.sitting .bob {
+  animation: none;
+}
+
+@keyframes trot {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3.5px);
+  }
+}
+
+.glyph {
+  display: block;
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)
+  );
+}
+
+// кот нарисован смотрящим вправо; влево — зеркалим
+.flip {
+  transform: scaleX(-1);
+}
+
+.fur {
+  fill: #0d0b13;
+  stroke: color-mix(in srgb, var(--accent) 32%, transparent);
+  stroke-width: 1.2;
+}
+
+.furStroke {
+  stroke: color-mix(in srgb, var(--accent) 32%, transparent);
+  fill: none;
+}
+
+.eye {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5.2s infinite;
+}
+
+@keyframes blink {
+  0%,
+  91%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.08);
+  }
+  97% {
+    transform: scaleY(1);
+  }
+}
+
+.ear {
+  transform-box: view-box;
+  transform-origin: 96px 24px;
+  animation: earTwitch 6.5s infinite;
+}
+
+@keyframes earTwitch {
+  0%,
+  88%,
+  100% {
+    transform: rotate(0deg);
+  }
+  91% {
+    transform: rotate(-9deg);
+  }
+  94% {
+    transform: rotate(3deg);
+  }
+}
+
+.tail {
+  transform-box: view-box;
+  transform-origin: 22px 86px;
+  animation: tailWave 3.4s ease-in-out infinite;
+}
+
+@keyframes tailWave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+}
+
+.whiskers path {
+  stroke: color-mix(in srgb, var(--accent) 45%, transparent);
+  stroke-width: 1;
+  fill: none;
+}
+
+.shadow {
+  position: absolute;
+  bottom: 2px;
+  left: 15px;
+  width: 100px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bob,
+  .eye,
+  .ear,
+  .tail {
+    animation: none;
+  }
+}

@@ -4,6 +4,8 @@
 }
 
 .sider {
+  position: relative;
+  z-index: 1;
   width: 200px;
   flex-shrink: 0;
   background: var(--surface);
@@ -11,6 +13,8 @@
 }
 
 .content {
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-width: 0;
   padding: 28px 20px 56px;

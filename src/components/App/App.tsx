@@ -8,6 +8,8 @@ import {
 } from '../../data/spreads';
 import { MenuPanel } from '../MenuPanel/MenuPanel';
 import { Spinner } from '../ui/Spinner';
+import { MysticLayer } from '../Mystic/MysticLayer';
+import { WanderingCat } from '../Mystic/WanderingCat';
 import s from './App.module.scss';
 
 // страницы грузим лениво — каждый расклад в своём чанке
@@ -52,6 +54,8 @@ const App: React.FC = () => {
 
   return (
     <div className={s.shell}>
+      <MysticLayer />
+      <WanderingCat />
       <button
         type='button'
         className={s.burger}
