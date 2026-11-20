@@ -8,6 +8,13 @@
   will-change: transform;
 }
 
+// страховка на мобильных: кота нет на уровне CSS независимо от JS
+@media (max-width: 991px) {
+  .cat {
+    display: none;
+  }
+}
+
 // бег: лёгкая рысь на внутреннем слое, чтобы не мешать translateX пути
 .running .bob {
   animation: trot 0.42s ease-in-out infinite;
