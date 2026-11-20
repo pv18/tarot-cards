@@ -13,6 +13,7 @@ import {
 } from 'react-icons/gi';
 import { ROUTES } from '../../routes';
 import { isSoundEnabled, toggleSound } from '../../utils/sound';
+import { applyTheme, loadTheme, type ThemeId } from '../../utils/theme';
 import { Switch } from '../ui/Switch';
 import s from './MenuPanel.module.scss';
 
@@ -38,6 +39,14 @@ const items = [
   { to: ROUTES.HISTORY, label: 'История', icon: <GiOpenBook />, end: false },
 ];
 
+// цвет свотча = акцент темы, чтобы кружок предсказывал настроение
+const THEMES: { id: ThemeId; label: string; color: string }[] = [
+  { id: 'midnight', label: 'Полночь', color: '#d4af37' },
+  { id: 'obsidian', label: 'Обсидиан', color: '#b9c6dd' },
+  { id: 'crimson', label: 'Багровая полночь', color: '#d9a05a' },
+  { id: 'forest', label: 'Ведьмин лес', color: '#55b98c' },
+];
+
 interface MenuPanelProps {
   // вызывается после перехода по пункту — каркас закрывает мобильное меню
   onNavigate?: () => void;
@@ -45,6 +54,7 @@ interface MenuPanelProps {
 
 export const MenuPanel: React.FC<MenuPanelProps> = ({ onNavigate }) => {
   const [soundOn, setSoundOn] = useState(isSoundEnabled);
+  const [theme, setTheme] = useState<ThemeId>(loadTheme);
 
   return (
     <div className={s.MenuPanel}>
@@ -67,6 +77,33 @@ export const MenuPanel: React.FC<MenuPanelProps> = ({ onNavigate }) => {
           </NavLink>
         ))}
       </nav>
+      <div className={s.themeRow}>
+        <span>Тема</span>
+        <div
+          className={s.swatches}
+          role='radiogroup'
+          aria-label='Тема оформления'
+        >
+          {THEMES.map((t) => (
+            <button
+              key={t.id}
+              type='button'
+              role='radio'
+              aria-checked={theme === t.id}
+              aria-label={t.label}
+              title={t.label}
+              className={[s.swatch, theme === t.id ? s.swatchActive : '']
+                .filter(Boolean)
+                .join(' ')}
+              style={{ background: t.color }}
+              onClick={() => {
+                applyTheme(t.id);
+                setTheme(t.id);
+              }}
+            />
+          ))}
+        </div>
+      </div>
       <div className={s.soundToggle}>
         <GiSoundWaves aria-hidden='true' />
         <span>Звуки колоды</span>

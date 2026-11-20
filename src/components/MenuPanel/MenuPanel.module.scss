@@ -6,14 +6,14 @@
 }
 
 .brand {
-  font-family: 'Prata', Georgia, serif;
+  font-family: var(--font-heading);
   font-size: 26px;
-  color: #d4af37;
+  color: var(--accent);
   text-align: center;
   padding: 22px 0 18px;
   letter-spacing: 0.18em;
-  text-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
 }
 
 .soundToggle {
@@ -21,7 +21,7 @@
   align-items: center;
   gap: 10px;
   margin: 16px 24px 0;
-  color: rgba(232, 226, 240, 0.6);
+  color: color-mix(in srgb, var(--text) 60%, transparent);
   font-size: 13px;
 }
 
@@ -38,7 +38,7 @@
   gap: 10px;
   padding: 9px 12px;
   border-radius: 10px;
-  color: rgba(232, 226, 240, 0.75);
+  color: color-mix(in srgb, var(--text) 75%, transparent);
   text-decoration: none;
   font-size: 14px;
   transition:
@@ -46,23 +46,66 @@
     color 0.2s ease;
 
   &:hover {
-    background: rgba(232, 226, 240, 0.06);
-    color: #f0e6d2;
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+    color: var(--text-warm);
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(212, 175, 55, 0.6);
+    outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
     outline-offset: 1px;
   }
 }
 
 .itemActive {
-  background: rgba(212, 175, 55, 0.18);
-  color: #f0e6d2;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--text-warm);
 }
 
 .icon {
   display: inline-flex;
   font-size: 17px;
-  color: rgba(212, 175, 55, 0.8);
+  color: color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+// переключатель тем: ряд круглых свотчей
+.themeRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 24px 0;
+  color: color-mix(in srgb, var(--text) 60%, transparent);
+  font-size: 13px;
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+    outline-offset: 2px;
+  }
+}
+
+.swatchActive {
+  box-shadow:
+    0 0 0 2px var(--bg-mid),
+    0 0 0 3px var(--accent);
 }
