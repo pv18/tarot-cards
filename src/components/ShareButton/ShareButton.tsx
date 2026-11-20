@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
-import { ShareAltOutlined } from '@ant-design/icons';
+import { FiShare2 } from 'react-icons/fi';
 import { buildShareUrl } from '../../utils/share';
 import { type IReading } from '../../types/types';
+import { Button } from '../ui/Button';
 
 interface ShareButtonProps {
   reading: Omit<IReading, 'id'>;
@@ -19,7 +19,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({ reading }) => {
   };
 
   return (
-    <Button size='large' icon={<ShareAltOutlined />} onClick={handleShare}>
+    <Button size='large' icon={<FiShare2 />} onClick={handleShare}>
       {copied ? 'Ссылка скопирована' : 'Поделиться'}
     </Button>
   );

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button, Input, Tag, Typography } from 'antd';
 import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
+import { Button } from '../../components/ui/Button';
+import { Chip } from '../../components/ui/Chip';
+import { TextInput } from '../../components/ui/TextInput';
 import { cardImage } from '../../data/cards';
 import s from './YesNo.module.scss';
 
@@ -33,13 +35,13 @@ export const YesNo = () => {
         «нет»
       </p>
 
-      <Input
+      <TextInput
         className={s.questionInput}
         placeholder='Ваш вопрос'
         maxLength={200}
         allowClear
         value={question}
-        onChange={(e) => setQuestion(e.target.value)}
+        onChange={setQuestion}
         disabled={complete}
       />
 
@@ -58,7 +60,7 @@ export const YesNo = () => {
 
       <div className={s.controls}>
         {!complete && (
-          <Button type='primary' size='large' onClick={spread.addCard}>
+          <Button variant='primary' size='large' onClick={spread.addCard}>
             Тянуть карту
           </Button>
         )}
@@ -82,20 +84,18 @@ export const YesNo = () => {
       {draw && (
         <section className={s.reading} aria-live='polite'>
           <h2 className={s.cardName}>{draw.card.name}</h2>
-          <Tag bordered={false} className={s.orientation}>
+          <Chip className={s.orientation}>
             {draw.reversed ? 'перевёрнутое положение' : 'прямое положение'}
-          </Tag>
+          </Chip>
           <div className={s.keywords}>
             {draw.card.keywords.map((k) => (
-              <Tag key={k} bordered={false}>
-                {k}
-              </Tag>
+              <Chip key={k}>{k}</Chip>
             ))}
           </div>
           <hr className='tarot-divider' />
-          <Typography.Paragraph className={s.meaning}>
+          <p className={s.meaning}>
             {draw.reversed ? draw.card.reversed : draw.card.upright}
-          </Typography.Paragraph>
+          </p>
         </section>
       )}
     </div>

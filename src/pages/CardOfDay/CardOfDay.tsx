@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Popconfirm, Tag, Typography } from 'antd';
 import { drawRandomCard } from '../../utils/deck';
 import { saveReading } from '../../utils/history';
 import { playFlip } from '../../utils/sound';
 import { useSharedReading } from '../../hooks/useSharedReading';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
+import { Button } from '../../components/ui/Button';
+import { Chip } from '../../components/ui/Chip';
+import { Popconfirm } from '../../components/ui/Popconfirm';
 import { cardImage, getCardById } from '../../data/cards';
 import { type ICardDrawn } from '../../types/types';
 import s from './CardOfDay.module.scss';
@@ -118,7 +120,7 @@ export const CardOfDay: React.FC = () => {
 
           <div className={s.actions}>
             {!draw && (
-              <Button type='primary' size='large' onClick={handleDraw}>
+              <Button variant='primary' size='large' onClick={handleDraw}>
                 Тянуть карту
               </Button>
             )}
@@ -149,20 +151,16 @@ export const CardOfDay: React.FC = () => {
           {draw ? (
             <>
               <h2 className={s.cardName}>{draw.card.name}</h2>
-              <Tag className={s.orientationTag} bordered={false}>
-                {orientation} положение
-              </Tag>
+              <Chip className={s.orientationTag}>{orientation} положение</Chip>
               <div className={s.keywords}>
                 {draw.card.keywords.map((k) => (
-                  <Tag key={k} bordered={false}>
-                    {k}
-                  </Tag>
+                  <Chip key={k}>{k}</Chip>
                 ))}
               </div>
               <hr className='tarot-divider' />
-              <Typography.Paragraph className={s.text}>
+              <p className={s.text}>
                 {draw.reversed ? draw.card.reversed : draw.card.upright}
-              </Typography.Paragraph>
+              </p>
               <p className={s.hint}>Новая карта появится после полуночи</p>
             </>
           ) : (

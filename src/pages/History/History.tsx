@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Empty, List, Modal, Popconfirm, Tag } from 'antd';
 import { READING_LABELS, clearHistory, loadHistory } from '../../utils/history';
 import { cardImage } from '../../data/cards';
 import { type IReading } from '../../types/types';
 import { ReadingView } from '../../components/ReadingView/ReadingView';
+import { Button } from '../../components/ui/Button';
+import { Chip } from '../../components/ui/Chip';
+import { EmptyState } from '../../components/ui/EmptyState';
+import { Modal } from '../../components/ui/Modal';
+import { Popconfirm } from '../../components/ui/Popconfirm';
 import s from './History.module.scss';
 
 export const History: React.FC = () => {
@@ -35,27 +39,30 @@ export const History: React.FC = () => {
           cancelText='Оставить'
           onConfirm={handleClear}
           disabled={history.length === 0}
+          danger
         >
-          <Button danger disabled={history.length === 0}>
+          <Button variant='danger' disabled={history.length === 0}>
             Очистить
           </Button>
         </Popconfirm>
       </div>
 
       {history.length === 0 ? (
-        <Empty
+        <EmptyState
+          className={s.emptyBlock}
           description='Раскладов пока нет — тяни карту, и она появится здесь'
-          style={{ marginTop: 80 }}
         />
       ) : (
-        <List
-          className={s.list}
-          dataSource={history}
-          renderItem={(reading) => (
-            <List.Item className={s.item} onClick={() => setSelected(reading)}>
+        <ul className={s.list}>
+          {history.map((reading) => (
+            <li
+              key={reading.id}
+              className={s.item}
+              onClick={() => setSelected(reading)}
+            >
               <div className={s.itemMain}>
                 <div className={s.itemMeta}>
-                  <Tag bordered={false}>{READING_LABELS[reading.type]}</Tag>
+                  <Chip>{READING_LABELS[reading.type]}</Chip>
                   <span className={s.date}>{formatDate(reading.date)}</span>
                 </div>
                 {reading.question && (
@@ -72,18 +79,16 @@ export const History: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </List.Item>
-          )}
-        />
+            </li>
+          ))}
+        </ul>
       )}
 
       <Modal
         open={selected !== null}
-        title={selected && READING_LABELS[selected.type]}
-        footer={null}
+        title={selected ? READING_LABELS[selected.type] : undefined}
         width={720}
-        centered
-        onCancel={() => setSelected(null)}
+        onClose={() => setSelected(null)}
       >
         {selected && (
           <div className={s.modalBody}>

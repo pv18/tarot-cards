@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'antd';
 import { READING_LABELS } from '../../utils/history';
 import { type IReading } from '../../types/types';
 import { ReadingView } from '../ReadingView/ReadingView';
+import { Button } from '../ui/Button';
 import s from './SharedReading.module.scss';
 
 interface SharedReadingProps {
@@ -21,7 +21,7 @@ export const SharedReading: React.FC<SharedReadingProps> = ({
       {reading.question ? ` по вопросу «${reading.question}»` : ''}
     </p>
     <ReadingView cards={reading.cards} />
-    <Button type='primary' onClick={onClear}>
+    <Button variant='primary' onClick={onClear}>
       Сделать свой расклад
     </Button>
   </div>

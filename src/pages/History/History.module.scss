@@ -16,15 +16,31 @@
 
 .list {
   margin-top: 20px;
+  padding: 0;
+  margin-bottom: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .item {
   cursor: pointer;
-  transition: background 0.2s ease;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 
   &:hover {
     background: rgba(232, 226, 240, 0.05);
+    border-color: rgba(212, 175, 55, 0.3);
   }
+}
+
+.emptyBlock {
+  margin-top: 80px;
 }
 
 .itemMain {

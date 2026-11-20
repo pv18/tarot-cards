@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Input, Typography } from 'antd';
 import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
+import { Button } from '../../components/ui/Button';
+import { TextInput } from '../../components/ui/TextInput';
 import { cardImage } from '../../data/cards';
 import s from './FiveCards.module.scss';
 
@@ -28,13 +29,13 @@ export const FiveCards = () => {
         Тасуйте колоду, думая о своём вопросе, и вытяните пять карт
       </p>
 
-      <Input
+      <TextInput
         className={s.questionInput}
         placeholder='Сформулируйте вопрос (необязательно)'
         maxLength={200}
         allowClear
         value={question}
-        onChange={(e) => setQuestion(e.target.value)}
+        onChange={setQuestion}
         disabled={drawn.length > 0}
       />
 
@@ -50,9 +51,7 @@ export const FiveCards = () => {
                     src={cardImage(draw.card.id)}
                     alt={draw.card.name}
                   />
-                  <Typography.Text className={s.cardName}>
-                    {draw.card.name}
-                  </Typography.Text>
+                  <span className={s.cardName}>{draw.card.name}</span>
                 </>
               ) : (
                 <div className={s.placeholder} />
@@ -64,7 +63,7 @@ export const FiveCards = () => {
 
       <div className={s.controls}>
         <Button
-          type='primary'
+          variant='primary'
           size='large'
           disabled={complete}
           onClick={spread.addCard}

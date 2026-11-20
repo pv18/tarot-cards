@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Input, Modal, Segmented, Tag } from 'antd';
 import { cardImage, cards } from '../../data/cards';
 import { type ICard, SUIT_TITLES, type Suit } from '../../types/types';
+import { Chip } from '../../components/ui/Chip';
+import { Modal } from '../../components/ui/Modal';
+import { Segmented } from '../../components/ui/Segmented';
+import { TextInput } from '../../components/ui/TextInput';
 import s from './AllCards.module.scss';
 
 type Filter = 'all' | Suit;
@@ -31,17 +34,18 @@ export const AllCards: React.FC = () => {
     <div className={s.page}>
       <h1>Все карты</h1>
       <div className={s.toolbar}>
-        <Input
+        <TextInput
           className={s.search}
           placeholder='Поиск по названию'
           allowClear
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
         />
         <Segmented
+          ariaLabel='Фильтр по мастям'
           options={filterOptions}
           value={filter}
-          onChange={(value) => setFilter(value as Filter)}
+          onChange={setFilter}
         />
       </div>
       <div className={s.grid}>
@@ -61,10 +65,8 @@ export const AllCards: React.FC = () => {
       <Modal
         open={selected !== null}
         title={selected?.name}
-        footer={null}
         width={720}
-        centered
-        onCancel={() => setSelected(null)}
+        onClose={() => setSelected(null)}
       >
         {selected && (
           <div className={s.modalBody}>
@@ -77,9 +79,7 @@ export const AllCards: React.FC = () => {
               <p className={s.suitTitle}>{SUIT_TITLES[selected.suit]}</p>
               <div className={s.keywords}>
                 {selected.keywords.map((k) => (
-                  <Tag key={k} bordered={false}>
-                    {k}
-                  </Tag>
+                  <Chip key={k}>{k}</Chip>
                 ))}
               </div>
               <h4 className={s.modalHeading}>Прямое положение</h4>

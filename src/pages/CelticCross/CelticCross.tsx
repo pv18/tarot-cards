@@ -1,9 +1,11 @@
 import React from 'react';
-import { Button, Input, Tag, Typography } from 'antd';
 import { playFlip, playShuffle } from '../../utils/sound';
 import { useSpread } from '../../hooks/useSpread';
 import { SharedReading } from '../../components/SharedReading/SharedReading';
 import { ShareButton } from '../../components/ShareButton/ShareButton';
+import { Button } from '../../components/ui/Button';
+import { Chip } from '../../components/ui/Chip';
+import { TextInput } from '../../components/ui/TextInput';
 import { cardImage } from '../../data/cards';
 import { CELTIC_POSITIONS } from '../../data/spreads';
 import s from './CelticCross.module.scss';
@@ -66,16 +68,16 @@ export const CelticCross = () => {
               src={cardImage(draw.card.id)}
               alt={draw.card.name}
             />
-            <Typography.Text className={s.label}>
+            <span className={s.label}>
               {position}. {CELTIC_POSITIONS[position - 1].name}
-            </Typography.Text>
+            </span>
           </>
         ) : (
           <>
             <div className={s.placeholder} />
-            <Typography.Text className={s.label}>
+            <span className={s.label}>
               {position}. {CELTIC_POSITIONS[position - 1].name}
-            </Typography.Text>
+            </span>
           </>
         )}
       </div>
@@ -97,13 +99,13 @@ export const CelticCross = () => {
         Десять карт — самый полный расклад на сложную ситуацию
       </p>
 
-      <Input
+      <TextInput
         className={s.questionInput}
         placeholder='Сформулируйте вопрос (необязательно)'
         maxLength={200}
         allowClear
         value={question}
-        onChange={(e) => setQuestion(e.target.value)}
+        onChange={setQuestion}
         disabled={drawn.length > 0}
       />
 
@@ -113,7 +115,7 @@ export const CelticCross = () => {
 
       <div className={s.controls}>
         <Button
-          type='primary'
+          variant='primary'
           size='large'
           disabled={complete}
           onClick={() => {
@@ -159,9 +161,9 @@ export const CelticCross = () => {
               <h3 className={s.readingTitle}>
                 {i + 1}. {CELTIC_POSITIONS[i].name} — {d.card.name}
               </h3>
-              <Tag bordered={false} className={s.orientation}>
+              <Chip className={s.orientation}>
                 {d.reversed ? 'перевёрнутое положение' : 'прямое положение'}
-              </Tag>
+              </Chip>
               <p className={s.meaning}>
                 {d.reversed ? d.card.reversed : d.card.upright}
               </p>

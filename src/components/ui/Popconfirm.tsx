@@ -5,6 +5,8 @@ import s from './Popconfirm.module.scss';
 
 interface PopconfirmProps {
   title: string;
+  // пояснение под заголовком — для нетривиальных подтверждений
+  description?: string;
   okText?: string;
   cancelText?: string;
   onConfirm: () => void;
@@ -19,6 +21,7 @@ interface PopconfirmProps {
 // не требует позиционирования, доступно с клавиатуры и удобно на мобильных
 export const Popconfirm: React.FC<PopconfirmProps> = ({
   title,
+  description,
   okText = 'Подтвердить',
   cancelText = 'Отмена',
   onConfirm,
@@ -41,6 +44,7 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
         title={title}
         width={360}
       >
+        {description && <p className={s.description}>{description}</p>}
         <div className={s.actions}>
           <Button variant='ghost' onClick={() => setOpen(false)}>
             {cancelText}
